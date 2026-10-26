@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rashifal Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;800&family=Hind+Siliguri:wght@400;700&family=Baloo+Da+2:wght@400;800&family=Noto+Serif+Bengali:wght@400;800&family=Anek+Bangla:wght@400;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eeebf5;--sf:#fff;--tx:#1f1a29;--mu:#7d7688;--bd:#e4dfec;--ac:#7c3aed;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15131a;--sf:#221f2a;--tx:#f0ecf6;--mu:#9d95a8;--bd:#383242}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100dvh;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);font:14px 'Noto Sans Bengali',system-ui,sans-serif}
+header{position:relative;z-index:3;display:flex;align-items:center;gap:8px;padding:10px 16px;background:linear-gradient(100deg,#6d28d9,#4338ca 60%,#2563eb);color:#fff;flex-wrap:wrap;box-shadow:0 2px 14px rgba(67,56,202,.35)}
+.logo{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:20px;margin-right:8px}
+header b{font-size:16px;display:flex;align-items:center}
+header small{font-weight:400;font-size:12px;margin-left:10px;background:rgba(255,255,255,.18);padding:2px 9px;border-radius:99px}
+.sp{flex:1}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--sf);color:var(--tx);border-radius:10px;padding:7px 11px;transition:.15s}
+button:hover{border-color:var(--ac)}
+header button{background:rgba(255,255,255,.16);border:0;color:#fff;font-weight:600}
+header button:hover{background:rgba(255,255,255,.3)}
+header button.pr{background:#fff;color:#4338ca}
+button:disabled{opacity:.5}
+.main{flex:1;min-height:0;display:grid;grid-template-columns:78px 1fr 300px}
+.tools{background:var(--sf);border-right:1px solid var(--bd);display:flex;flex-direction:column;gap:8px;padding:10px 8px}
+.tools button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;padding:10px 2px;border:0;border-radius:12px;background:var(--bg)}
+.tools button:hover{background:var(--ac);color:#fff}.tools i{font-style:normal;font-size:20px}
+.area{overflow:auto;display:flex;padding:14px;background:radial-gradient(rgba(124,58,237,.18) 1px,transparent 1.2px) 0 0/18px 18px,var(--bg);touch-action:pan-x pan-y}
+#wrap{position:relative;flex:0 0 auto;margin:auto}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1350px;transform-origin:0 0}
+#cv{position:absolute;inset:0;overflow:hidden;background:#fff;box-shadow:0 10px 50px rgba(40,20,80,.35)}
+.el{position:absolute;box-sizing:border-box;overflow:hidden;touch-action:none;cursor:move;user-select:none}
+.el img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
+.el svg{display:block;pointer-events:none}
+.el .in{width:100%;white-space:pre-wrap;word-break:break-word}
+.el .in[contenteditable=true]{cursor:text;user-select:text;outline:none}
+#sel{position:absolute;border:calc(2px*var(--inv,1)) solid #7c3aed;pointer-events:none;display:none}
+#sel i{position:absolute;width:calc(18px*var(--inv,1));height:calc(18px*var(--inv,1));background:#fff;border:calc(2px*var(--inv,1)) solid #7c3aed;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;touch-action:none}
+aside{background:var(--sf);border-left:1px solid var(--bd);padding:14px;overflow:auto}
+aside h4{margin:4px 0 8px;font-size:15px}
+aside h5{margin:18px 0 2px;padding-top:12px;border-top:1px solid var(--bd);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ac)}
+aside label{display:block;font-size:12px;color:var(--mu);margin-top:9px}
+aside input[type=number],aside select,aside textarea,aside input[type=text]{width:100%;padding:7px 8px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit}
+aside input:focus,aside select:focus,aside textarea:focus{outline:2px solid var(--ac);outline-offset:-1px}
+aside textarea{min-height:130px;resize:vertical;line-height:1.5}
+aside input[type=color]{width:100%;height:34px;padding:2px;border:1px solid var(--bd);border-radius:9px;background:none}
+aside .cr{display:flex;gap:4px}.cr button{padding:2px 8px}
+aside .ck{display:flex;gap:7px;align-items:center;color:var(--tx);font-size:13px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.bar button{flex:1;min-width:72px;font-size:12px}
+.pri{background:linear-gradient(100deg,#7c3aed,#4f46e5)!important;color:#fff!important;border:0!important;font-weight:600}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;background:var(--sf);border-top:1px solid var(--bd)}
+.chips button{flex:0 0 auto;display:flex;align-items:center;gap:6px;border-radius:99px;border:1.5px solid var(--c,var(--bd));padding:6px 14px 6px 10px}
+.chips .g{font-size:17px;color:var(--c)}
+.chips button.on{background:var(--c);color:#fff}.chips button.on .g{color:#fff}
+.chips button.d::after{content:"✓";font-size:11px}
+#st{font-size:12px;color:var(--mu);padding:4px 14px;background:var(--sf);min-height:24px}
+#guides{position:absolute;inset:0;pointer-events:none}#guides div{position:absolute;background:#ff2d9a}
+.sb{display:flex;align-items:center;background:var(--sf)}#st{flex:1}.zb{padding-right:12px}.zb button{padding:2px 10px;margin-left:4px}
+#md{position:fixed;inset:0;background:rgba(12,6,24,.6);display:grid;place-items:center;z-index:50;padding:12px}
+#md .bx{background:var(--sf);color:var(--tx);border-radius:16px;padding:18px;width:min(980px,96vw);max-height:90vh;overflow:auto}
+#md textarea{width:100%;min-height:300px;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;line-height:1.5}
+#md code{background:var(--bg);padding:1px 5px;border-radius:5px}
+.ovg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.th{position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.25);transition:.15s}.th:hover{transform:translateY(-3px)}
+.th .c2{position:absolute;left:0;top:0;width:1080px;height:1350px;transform-origin:0 0}.th .el{pointer-events:none}
+.th .lb{position:absolute;left:8px;bottom:6px;background:rgba(0,0,0,.65);color:#fff;padding:2px 9px;border-radius:99px;font-size:12px}
+@media(max-width:900px){body{height:auto;min-height:100dvh}.main{grid-template-columns:1fr}.tools{flex-direction:row;border-right:0;border-bottom:1px solid var(--bd)}.tools button{flex:1}.area{height:64vh}aside{border-left:0}}
+</style>
+</head>
+<body>
+<header><div class="logo">♉&#xFE0E;</div><b>ৰাশিফল Studio<small id="prog"></small></b><div class="sp"></div>
+ <button id="bOv">▦ Overview</button><button id="bBulk">📥 Bulk text</button><button id="bPrj">💾 Project</button><button id="un">↶</button><button id="re">↷</button><button class="pr" id="b1">⬇ PNG</button><button id="b2">⬇ ZIP (12)</button><button id="b3">⬇ PDF (12)</button></header>
+<div class="main">
+ <nav class="tools"><button id="aT"><i>T</i>Text</button><button id="aR"><i>◼</i>Shape</button><button id="aI"><i>🖼</i>Image</button><button id="aA"><i>✦</i>Badge</button><button id="aC"><i>●</i>Circle</button><button id="aL"><i>―</i>Line</button></nav>
+ <div class="area" id="area"><div id="wrap"><div id="stage"><div id="cv"></div><div id="sel"></div><div id="guides"></div></div></div></div>
+ <aside id="props"></aside>
+</div>
+<div class="chips" id="chips"></div>
+<div class="sb"><span id="st">Double-click text to edit · Ctrl+C/V copy-paste · Ctrl+Z undo · arrows nudge · Alt = no snapping · saved automatically</span><span class="zb"><button id="z-">−</button><button id="z0">Fit</button><button id="z+">+</button></span></div>
+<input type="file" id="fA" accept="image/*" hidden><input type="file" id="fR" accept="image/*" hidden>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+const R=[["মেষ","Aries","♈","aries"],["বৃষ","Taurus","♉","taurus"],["মিথুন","Gemini","♊","gemini"],["কৰ্কট","Cancer","♋","cancer"],["সিংহ","Leo","♌","leo"],["কন্যা","Virgo","♍","virgo"],["তুলা","Libra","♎","libra"],["বৃশ্চিক","Scorpio","♏","scorpio"],["ধনু","Sagittarius","♐","sagittarius"],["মকৰ","Capricorn","♑","capricorn"],["কুম্ভ","Aquarius","♒","aquarius"],["মীন","Pisces","♓","pisces"]];
+const FONTS=["Noto Sans Bengali","Hind Siliguri","Baloo Da 2","Noto Serif Bengali","Anek Bangla","Arial"];
+const OL='4px 0 #fff,-4px 0 #fff,0 4px #fff,0 -4px #fff,3px 3px #fff,-3px -3px #fff,3px -3px #fff,-3px 3px #fff,7px 10px 0 rgba(0,0,0,.28)';
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let uid=1,iid=0,IMG={},P=[],cur=0,sel=null,H=[],hi=-1,drag=null,scale=1,tm;
+const E=o=>({id:uid++,t:'rect',x:0,y:0,w:100,h:100,op:1,...o});
+const V={week:'',phone:'6901529861',handle:''},EX={fmt:'png',scale:1};let CB=null,zm=0;
+const tok=t=>String(t??'').replace(/\{\{(\w+)\}\}/g,(m,k)=>V[k]??m);
+const capDef=i=>`${R[i][0]} ৰাশিৰ সাপ্তাহিক ৰাশিফল ✨\n{{week}}\n\n#ৰাশিফল #${R[i][1]} #horoscope #weeklyhoroscope #assam`;
+const weekEl=d=>E({t:'text',key:'week',ff:FONTS[0],txt:'{{week}}',x:290,y:234,w:500,h:46,fs:24,b:1,color:d,al:'c',lh:1.2});
+const TH=Object.fromEntries([['aries','#d63a2f','#7a1510','#ff8a5c','#9c2a12','🔥 অগ্নি','#ffe08a'],['taurus','#c4202c','#7a0f1a','#9a5cc0','#4a1f72','🌍 পৃথিৱী','#ffd24d'],['gemini','#d99a00','#80530a','#ffd44d','#b36b00','💨 বায়ু','#fff5c2'],['cancer','#3a7bd5','#17407e','#9ad0ff','#2a5aa8','💧 জল','#ffffff'],['leo','#e67e22','#8c3d00','#ffc04d','#b34700','🔥 অগ্নি','#fff1c2'],['virgo','#2e8b57','#14502f','#7fd6a0','#1d6b40','🌍 পৃথিৱী','#fff7c2'],['libra','#d6478f','#7d1e52','#ff9ccc','#a22b6e','💨 বায়ু','#ffffff'],['scorpio','#8e1b3a','#4a0a1d','#d6577a','#5a0f27','💧 জল','#ffd1dc'],['sagittarius','#7b3fe4','#3d1a8a','#b995ff','#4a22a6','🔥 অগ্নি','#ffe08a'],['capricorn','#5b6770','#262d33','#9fb0bb','#37424a','🌍 পৃথিৱী','#ffffff'],['aquarius','#12a4b8','#0a5563','#6fe0ee','#0b6f80','💨 বায়ু','#ffffff'],['pisces','#4f6bd8','#232f7a','#a0b3ff','#2d3a9c','💧 জল','#ffffff']].map((a,i)=>[i,{p:a[1],d:a[2],a:a[3],i2:a[4],e:a[5],g:a[6]}]));
+const mix=(a,b,t)=>{const f=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),A=f(a),B=f(b);return '#'+A.map((v,i)=>Math.round(v*(1-t)+B[i]*t).toString(16).padStart(2,'0')).join('')};
+const pageBg=ti=>mix(TH[ti].p,'#ffffff',.94);
+function tpl(i,ti=i){const r=R[i],T=TH[ti],p=T.p,d=T.d,X=[];
+ const rect=o=>X.push(E({t:'rect',...o})),txt=o=>X.push(E({t:'text',ff:FONTS[0],fs:24,color:'#222222',al:'l',lh:1.5,txt:'',...o}));
+ rect({key:'hdbg',w:1080,h:292,bg:'#ffffff',bg2:mix(p,'#ffffff',.82)});
+ rect({key:'lp',w:300,h:292,bg:p,bg2:d,r:'0 0 260px 0'});
+ [[330,36,30],[742,236,26],[700,44,20],[250,250,22]].forEach(([x,y,f],k)=>txt({key:'st'+k,txt:'✦',x,y,w:50,h:50,fs:f,color:k==3?'#ffffff':p,al:'c',lh:1.2,op:.55}));
+ txt({key:'head',txt:'আপোনাৰ\nসাপ্তাহিক',x:44,y:90,w:250,h:130,fs:36,b:1,color:'#ffffff'});
+ X.push(weekEl(d));
+ txt({key:'title',txt:'ৰাশিফল',x:290,y:44,w:500,h:200,fs:150,b:1,color:p,al:'c',lh:1.3,ol:1});
+ X.push(E({t:'art',key:'art',u:1,x:790,y:22,w:250,h:250,c1:T.a,c2:T.i2,gc:T.g,gl:r[2]}));
+ rect({key:'pill',x:40,y:302,w:640,h:88,r:44,bg:d,bg2:p,sd:1});
+ rect({key:'pdot',x:40,y:302,w:88,h:88,r:'50%',bg:mix(p,'#ffffff',.4),bg2:d});
+ txt({key:'pt',u:1,txt:`${r[0]} ৰাশি (${r[1]})`,x:142,y:302,w:530,h:88,fs:44,b:1,color:'#ffffff',va:1,lh:1.2});
+ rect({key:'tagbg',x:710,y:316,w:330,h:60,r:30,bg:mix(p,'#ffffff',.86),bw:3,bc:p});
+ txt({key:'tag',u:1,txt:T.e,x:710,y:316,w:330,h:60,fs:28,b:1,color:d,al:'c',va:1,lh:1.2});
+ rect({key:'box',x:40,y:410,w:1000,h:780,r:36,bg:ti===1?'#d5dce8':mix(p,'#ffffff',.84),bw:2,bc:mix(p,'#ffffff',.62)});
+ txt({key:'wm',u:1,txt:r[2]+'\uFE0E',x:290,y:500,w:700,h:620,fs:520,al:'c',va:1,lh:1,color:p,op:.07});
+ [['prem','প্ৰেম ❤️','❤️','#e0272f'],['career','কৰ্মজীৱন 💼','💼','#1e4fa0'],['edu','শিক্ষা 🪷','🪷','#e8761a']].forEach(([k,h,ic,c],j)=>{const y=438+j*250;
+  txt({key:k+'_i',txt:ic,x:70,y:y+4,w:84,h:84,r:'50%',bg:c,bw:4,bc:'#ffffff',fs:42,al:'c',va:1,lh:1,sd:1});
+  txt({key:k+'_h',txt:h,x:194,y,w:800,h:36,fs:26,b:1,lh:1.3,color:d});
+  txt({key:k,u:1,x:194,y:y+40,w:800,h:190,fs:22,al:'j',lh:1.6,fit:1,color:'#2b2f38'})});
+ rect({key:'fl',x:40,y:1212,w:493,h:124,r:22,bg:p,bg2:d});
+ rect({key:'fr',x:547,y:1212,w:493,h:124,r:22,bg:'#1d2b57',bw:2,bc:'#2d3d75'});
+ txt({key:'fli',txt:'💬',x:56,y:1236,w:76,h:76,fs:56,al:'c',va:1,lh:1});
+ txt({key:'flt',txt:'আপোনাৰ গার্চেলৰ বিলিং পাবলৈ\nহোৱাটছএপত মেছেজ কৰক {{phone}}',x:140,y:1212,w:385,h:124,fs:23,b:1,color:'#ffffff',va:1,lh:1.45,fit:1});
+ txt({key:'fri',txt:'🔔',x:563,y:1236,w:76,h:76,fs:56,al:'c',va:1,lh:1});
+ txt({key:'frt',txt:'নতুন পোষ্টবোৰ মিছ নকৰিবলৈ পেজখন\nফলো কৰক আৰু শ্বেয়াৰ কৰক',x:647,y:1212,w:385,h:124,fs:23,b:1,color:'#ffffff',va:1,lh:1.45,fit:1});
+ return X}
+function rebuild(pi,ti){const pg=P[pi],old=pg.els,n=tpl(pi,ti),keys=new Set(n.map(x=>x.key));
+ n.forEach(x=>{const o=old.find(q=>q.key===x.key);if(o&&x.u&&x.key!=='art'&&x.key!=='wm'&&x.key!=='tag')x.txt=o.txt});
+ pg.els=n.concat(old.filter(q=>!keys.has(q.key)));pg.th=ti;pg.bg=pageBg(ti)}
+const fresh=()=>R.map((_,i)=>({bg:pageBg(i),th:i,els:tpl(i)}));
+const SK='rashi_studio_v2';
+try{const d=JSON.parse(localStorage.getItem(SK)||'null');if(d&&d.P){P=d.P;IMG=d.IMG||{};cur=d.cur||0;Object.assign(V,d.V);Object.assign(EX,d.EX)}}catch(e){}
+if(!P.length){P=fresh();try{const o=JSON.parse(localStorage.getItem('rashi_studio_v1')||'null');if(o&&o.P){IMG=o.IMG||{};o.P.forEach((pg,i)=>pg.els.forEach(e=>{if(['prem','career','edu'].includes(e.key)&&e.txt){const t=P[i].els.find(x=>x.key===e.key);if(t)t.txt=e.txt}}))}}catch(e){}}
+uid=Math.max(1,...P.flatMap(p=>p.els.map(e=>e.id)))+1;iid=Math.max(0,...Object.keys(IMG).map(k=>+k.slice(1)));
+P.forEach((pg,i)=>{if(!pg.els.some(e=>e.key==='week'))pg.els.push(weekEl(TH[pg.th??i].d))});
+const get=id=>P[cur].els.find(e=>e.id===id),node=id=>$('cv').querySelector(`[data-id="${id}"]`);
+const hex=c=>/^#[0-9a-f]{3}$/i.test(c||'')?'#'+c.slice(1).split('').map(x=>x+x).join(''):(c||'#ffffff');
+function paintEl(n,el){const s=n.style;
+ s.cssText=`left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px;opacity:${el.op??1}${el.hd?';display:none':''}`;
+ if(el.bg)s.background=el.bg2?`linear-gradient(120deg,${el.bg},${el.bg2})`:el.bg;
+ if(el.r!=null&&el.r!=='')s.borderRadius=typeof el.r==='number'?el.r+'px':el.r;
+ if(el.bw)s.border=`${el.bw}px solid ${el.bc||'#000'}`;
+ if(el.sd)s.boxShadow='0 5px 0 rgba(0,0,0,.3)';
+ if(el.t==='art'){const st=(x,y,r)=>`<path d="M${x} ${y-r}Q${x} ${y} ${x+r} ${y}Q${x} ${y} ${x} ${y+r}Q${x} ${y} ${x-r} ${y}Q${x} ${y} ${x} ${y-r}z" fill="#fff" fill-opacity=".85"/>`;let a='';for(let k=0;k<12;k++){const q=k*Math.PI/6;a+=`<circle cx="${120+100*Math.sin(q)}" cy="${120-100*Math.cos(q)}" r="${k%3?2.4:4.4}" fill="#fff" fill-opacity=".85"/>`}
+ n.innerHTML=`<svg viewBox="0 0 240 240" width="${el.w}" height="${el.h}"><defs><radialGradient id="ag${el.id}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="${el.c1}"/><stop offset="1" stop-color="${el.c2}"/></radialGradient></defs><circle cx="120" cy="120" r="118" fill="url(#ag${el.id})"/><circle cx="120" cy="120" r="114" fill="none" stroke="#fff" stroke-width="5"/><circle cx="120" cy="120" r="88" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>${a}${st(60,70,9)}${st(182,64,7)}${st(188,176,10)}${st(54,172,6)}<text x="120" y="152" text-anchor="middle" font-size="100" fill="${el.gc}" font-family="'Noto Sans Symbols 2','Segoe UI Symbol','DejaVu Sans',sans-serif">${esc(el.gl)}&#xFE0E;</text></svg>`;return}
+ if(el.t==='img'){n.innerHTML=`<img src="${IMG[el.src]||''}">`;return}
+ if(el.t!=='text'){n.innerHTML='';return}
+ if(el.va&&!el.hd){s.display='flex';s.alignItems='center'}
+ n.innerHTML='<div class="in"></div>';const i=n.firstChild,t=i.style;i.textContent=tok(el.txt);
+ t.fontFamily=`'${el.ff}',sans-serif`;t.fontWeight=el.b?800:400;t.color=el.color;t.lineHeight=el.lh;
+ t.textAlign={l:'left',c:'center',r:'right',j:'justify'}[el.al]||'left';if(el.ol)t.textShadow=OL;
+ let f=el.fs;t.fontSize=f+'px';if(el.fit)while(i.offsetHeight>el.h&&f>12){f--;t.fontSize=f+'px'}}
+function render(){const cv=$('cv');cv.innerHTML='';cv.style.background=P[cur].bg||'#fff';
+ P[cur].els.forEach(el=>{const n=document.createElement('div');n.className='el';n.dataset.id=el.id;cv.appendChild(n);paintEl(n,el)});
+ updSel();panel();chips()}
+function updSel(){const el=sel&&get(sel),s=$('sel');if(!el){s.style.display='none';return}
+ s.style.cssText=`display:block;left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px`}
+const HP={nw:[0,0,'nwse'],n:[.5,0,'ns'],ne:[1,0,'nesw'],e:[1,.5,'ew'],se:[1,1,'nwse'],s:[.5,1,'ns'],sw:[0,1,'nesw'],w:[0,.5,'ew']};
+for(const h in HP){const i=document.createElement('i');i.dataset.h=h;i.style.cssText=`left:${HP[h][0]*100}%;top:${HP[h][1]*100}%;cursor:${HP[h][2]}-resize`;$('sel').appendChild(i)}
+function select(id){sel=id;updSel();panel()}
+function refresh(el){const n=node(el.id);if(n)paintEl(n,el);updSel();soon()}
+function persist(){try{localStorage.setItem(SK,JSON.stringify({P,IMG,cur,V,EX}))}catch(e){$('st').textContent='Browser storage is full — large images may not be saved.'}}
+function commit(){const j=JSON.stringify(P);if(H[hi]===j)return;H=H.slice(0,hi+1);H.push(j);if(H.length>40)H.shift();hi=H.length-1;persist();$('prog').textContent=` · ${P.filter(p=>p.els.some(e=>['prem','career','edu'].includes(e.key)&&e.txt)).length}/12 filled`}
+const soon=()=>{clearTimeout(tm);tm=setTimeout(commit,500)};
+function hist(d){const k=hi+d;if(k<0||k>=H.length)return;hi=k;P=JSON.parse(H[hi]);sel=null;render();persist()}
+function chips(){$('chips').innerHTML='';R.forEach((r,i)=>{const b=document.createElement('button');b.style.setProperty('--c',TH[P[i].th??i].p);b.innerHTML=`<span class="g">${r[2]}&#xFE0E;</span>${r[0]}`;b.className=(i==cur?'on ':'')+(P[i].els.some(e=>['prem','career','edu'].includes(e.key)&&e.txt)?'d':'');b.onclick=()=>{cur=i;sel=null;render();persist()};$('chips').appendChild(b)})}
+function pagePanel(){const th=P[cur].th??cur,o=(v,t,c)=>`<option value="${v}" ${v==c?'selected':''}>${t}</option>`;
+ return `<h5>Weekly variables</h5><label>Week label — use {{week}} in any text<input type="text" data-v="week" value="${esc(V.week)}" placeholder="২৬ অক্টোবৰ – ১ নৱেম্বৰ"></label><label>WhatsApp number — {{phone}}<input type="text" data-v="phone" value="${esc(V.phone)}"></label><label>Page handle — {{handle}}<input type="text" data-v="handle" value="${esc(V.handle)}" placeholder="@yourpage"></label>
+ <h5>Instagram caption</h5><textarea data-cap style="min-height:110px">${esc(P[cur].cap??capDef(cur))}</textarea><div class="bar"><button id="cpc">Copy caption</button></div>
+ <h5>Page</h5><label>Background</label><input type="color" data-pg="bg" value="${hex(P[cur].bg)}">
+ <h5>Colour theme</h5><select id="thm">${R.map((r,j)=>`<option value="${j}" ${j===th?'selected':''}>${r[2]}&#xFE0E; ${r[0]} · ${r[1]}</option>`).join('')}</select><div class="bar"><button id="thp">This page</button><button id="tha" class="pri">All 12 pages</button></div><div class="bar"><button id="rst">Reset this page design</button></div>
+ <h5>Export</h5><div class="g2"><label>Format<select data-x="fmt">${o('png','PNG',EX.fmt)}${o('jpeg','JPG (smaller)',EX.fmt)}</select></label><label>Size<select data-x="scale">${o(1,'1080×1350',EX.scale)}${o(2,'2160×2700 (2×)',EX.scale)}</select></label></div>`}
+function panel(){const el=sel&&get(sel),p=$('props');
+ let h=`<label>Select any element (layers)</label><select id="lay"><option value="">— choose —</option>${[...P[cur].els].reverse().map(e=>`<option value="${e.id}" ${e.id===sel?'selected':''}>${e.t==='text'?'T  '+esc((e.txt||'').replace(/\n/g,' ').slice(0,20)):e.t==='img'?'🖼 image':'▭ shape'}${e.key?' · '+e.key:''}</option>`).join('')}</select>`;
+ if(!el){p.innerHTML=h+pagePanel();return}
+ const n=(k,l,st)=>`<label>${l}<input type="number" data-k="${k}" value="${typeof el[k]==='number'?el[k]:''}" ${st?'step="'+st+'"':''}></label>`;
+ const c=(k,l)=>`<label>${l}<span class="cr"><input type="color" data-k="${k}" value="${hex(el[k])}"><button data-clr="${k}">✕</button></span></label>`;
+ const ck=(k,l)=>`<label class="ck"><input type="checkbox" data-k="${k}" ${el[k]?'checked':''}> ${l}</label>`;
+ if(el.t==='text')h+=`<h5>Text</h5><textarea data-k="txt">${esc(el.txt)}</textarea><div style="font-size:11px;color:var(--mu)">Variables: {{week}} {{phone}} {{handle}}</div><label>Font<select data-k="ff">${FONTS.map(f=>`<option ${f===el.ff?'selected':''}>${f}</option>`).join('')}</select></label><div class="g2">${n('fs','Size')}${n('lh','Line height',.1)}</div><div class="g2">${c('color','Colour')}<label>Align<select data-k="al">${[['l','Left'],['c','Center'],['r','Right'],['j','Justify']].map(([v,t])=>`<option value="${v}" ${el.al===v?'selected':''}>${t}</option>`).join('')}</select></label></div>${ck('b','Bold')}${ck('va','Centre vertically')}${ck('fit','Shrink text to fit box')}${ck('ol','White outline')}`;
+ if(el.t==='art')h+=`<h5>Zodiac badge</h5><label>Symbol<input type="text" data-k="gl" value="${esc(el.gl)}"></label><div class="g2">${c('c1','Colour 1')}${c('c2','Colour 2')}</div>${c('gc','Symbol colour')}`;
+ if(el.t==='img')h+=`<div class="bar"><button id="repl">Replace image</button></div>`;
+ if(el.t==='rect'||el.t==='text')h+=`<h5>Fill &amp; border</h5><div class="g2">${c('bg','Fill')}${c('bg2','Fill 2')}</div><div class="g2">${n('r','Radius')}${n('bw','Border')}</div>${c('bc','Border colour')}${ck('sd','Shadow')}`;
+ h+=`<h5>Arrange</h5><div class="bar" style="margin-top:6px">${[['l','⇤','Left'],['c','↔','Centre'],['r','⇥','Right'],['t','⤒','Top'],['m','↕','Middle'],['b','⤓','Bottom']].map(a=>`<button data-al="${a[0]}" title="Align ${a[2]} on page" style="min-width:36px">${a[1]}</button>`).join('')}</div><label>Opacity<input type="range" data-k="op" min="0" max="1" step=".05" value="${el.op??1}" style="width:100%"></label>${ck('u','Different on each rashi (apply-to-all keeps my content)')}${ck('lk','Lock position')}${ck('hd','Hide')}
+ <div class="bar"><button id="fw">Forward</button><button id="bk">Back</button><button id="dp">Duplicate</button><button id="dl">Delete</button></div><div class="bar"><button class="pri" id="all">Apply to all 12 pages</button></div>`;
+ p.innerHTML=h}
+$('props').addEventListener('input',e=>{const t=e.target;
+ if(t.id==='lay')return select(+t.value||null);
+ if(t.dataset.pg){P[cur].bg=t.value;$('cv').style.background=t.value;return soon()}
+ if(t.dataset.v){V[t.dataset.v]=t.value;P[cur].els.forEach(refreshNow);persist();return}
+ if(t.dataset.cap!==undefined){P[cur].cap=t.value;return soon()}
+ if(t.dataset.x){EX[t.dataset.x]=t.dataset.x==='scale'?+t.value:t.value;persist();return}
+ const k=t.dataset.k,el=sel&&get(sel);if(!k||!el)return;
+ el[k]=t.type==='checkbox'?(t.checked?1:0):(t.type==='number'||t.type==='range')?(parseFloat(t.value)||0):t.value;
+ if(k==='ff')document.fonts.load(`400 20px "${t.value}"`).then(()=>{document.fonts.load(`800 20px "${t.value}"`).then(()=>{refresh(el)})});
+ refresh(el);if(k==='u'||k==='fit'||k==='va'||k==='b'||k==='ol'||k==='sd')panel()});
+$('props').addEventListener('click',e=>{const t=e.target,el=sel&&get(sel),A=P[cur].els;
+ if(t.id==='cpc'){const x=tok(P[cur].cap??capDef(cur)),ok=()=>$('st').textContent='Caption copied.';(navigator.clipboard?navigator.clipboard.writeText(x):Promise.reject()).then(ok).catch(()=>{const a=document.createElement('textarea');a.value=x;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();ok()});return}
+ if(t.dataset.al&&el){const k=t.dataset.al;if(k==='l')el.x=0;if(k==='c')el.x=Math.round((1080-el.w)/2);if(k==='r')el.x=1080-el.w;if(k==='t')el.y=0;if(k==='m')el.y=Math.round((1350-el.h)/2);if(k==='b')el.y=1350-el.h;refresh(el);return}
+ if(t.dataset.clr&&el){delete el[t.dataset.clr];refresh(el);panel();return}
+ if(t.id==='rst'){if(!confirm('Reset this page design? Your rashi text is kept.'))return;rebuild(cur,cur);sel=null;render();commit();return}
+ if(t.id==='thp'||t.id==='tha'){const ti=+$('thm').value;if(t.id==='tha'&&!confirm('Apply this theme to all 12 pages?'))return;(t.id==='tha'?P.map((_,j)=>j):[cur]).forEach(j=>rebuild(j,ti));sel=null;render();commit();return}
+ if(!el)return;const i=A.indexOf(el);
+ if(t.id==='fw'&&i<A.length-1){A.splice(i,2,A[i+1],el);render();commit()}
+ if(t.id==='bk'&&i>0){A.splice(i-1,2,el,A[i-1]);render();commit()}
+ if(t.id==='dp'){const c={...JSON.parse(JSON.stringify(el)),id:uid++,x:el.x+24,y:el.y+24};delete c.key;A.push(c);sel=c.id;render();commit()}
+ if(t.id==='dl')del();
+ if(t.id==='repl')$('fR').click();
+ if(t.id==='all'){if(!el.key)el.key='c'+el.id;P.forEach((pg,j)=>{if(j===cur)return;let o=pg.els.find(q=>q.key===el.key);const keepT=o&&o.txt,keepS=o&&o.src,keepG=o&&o.gl;if(!o){o=E({});pg.els.push(o)}const id=o.id;Object.assign(o,JSON.parse(JSON.stringify(el)),{id});if(el.u&&keepT!==undefined)o.txt=keepT;if(el.u&&keepS)o.src=keepS;if(el.u&&keepG)o.gl=keepG});commit();$('st').textContent='Applied to all 12 pages'+(el.u?' (each page keeps its own text/image).':'.')}});
+function del(){const el=sel&&get(sel);if(!el)return;P[cur].els=P[cur].els.filter(e=>e!==el);sel=null;render();commit()}
+$('area').addEventListener('pointerdown',e=>{if(e.target.isContentEditable)return;
+ const h=e.target.dataset.h,n=e.target.closest('.el');
+ if(h){const el=get(sel);if(el&&!el.lk)drag={h,sx:e.clientX,sy:e.clientY,o:{...el}}}
+ else if(n){select(+n.dataset.id);const el=get(sel);if(el&&!el.lk)drag={h:'',sx:e.clientX,sy:e.clientY,o:{...el}}}
+ else select(null);
+ if(drag)e.preventDefault()});
+const refreshNow=el=>{const n=node(el.id);if(n)paintEl(n,el);updSel()};
+function snapTo(el,nx,ny){const XS=[0,540,1080],YS=[0,675,1350];P[cur].els.forEach(q=>{if(q===el||q.hd)return;XS.push(q.x,q.x+q.w/2,q.x+q.w);YS.push(q.y,q.y+q.h/2,q.y+q.h)});
+ let bx=8,by=8,sx=null,sy=null,g='';
+ [0,el.w/2,el.w].forEach(o=>XS.forEach(c=>{const d=c-(nx+o);if(Math.abs(d)<bx){bx=Math.abs(d);sx=[d,c]}}));
+ [0,el.h/2,el.h].forEach(o=>YS.forEach(c=>{const d=c-(ny+o);if(Math.abs(d)<by){by=Math.abs(d);sy=[d,c]}}));
+ if(sx){nx+=sx[0];g+=`<div style="left:${sx[1]}px;top:0;width:calc(2px*var(--inv,1));height:1350px"></div>`}
+ if(sy){ny+=sy[0];g+=`<div style="top:${sy[1]}px;left:0;height:calc(2px*var(--inv,1));width:1080px"></div>`}
+ $('guides').innerHTML=g;return[Math.round(nx),Math.round(ny)]}
+addEventListener('pointermove',e=>{if(!drag)return;const el=get(sel),o=drag.o,dx=(e.clientX-drag.sx)/scale,dy=(e.clientY-drag.sy)/scale,h=drag.h;
+ if(!h){[el.x,el.y]=e.altKey?[Math.round(o.x+dx),Math.round(o.y+dy)]:snapTo(el,o.x+dx,o.y+dy)}else{let{x,y,w,h:ht}=o;
+  if(h.includes('e'))w=o.w+dx;if(h.includes('s'))ht=o.h+dy;if(h.includes('w')){w=o.w-dx;x=o.x+dx}if(h.includes('n')){ht=o.h-dy;y=o.y+dy}
+  if(w<20){if(h.includes('w'))x-=20-w;w=20}if(ht<20){if(h.includes('n'))y-=20-ht;ht=20}
+  Object.assign(el,{x:Math.round(x),y:Math.round(y),w:Math.round(w),h:Math.round(ht)})}
+ refreshNow(el)});
+addEventListener('pointerup',()=>{if(drag){drag=null;$('guides').innerHTML='';commit()}});
+$('cv').addEventListener('dblclick',e=>{const n=e.target.closest('.el');if(!n)return;const el=get(+n.dataset.id);if(el.t!=='text')return;const i=n.firstChild;
+ i.textContent=el.txt||'';i.contentEditable='true';i.focus();getSelection().selectAllChildren(i);getSelection().collapseToEnd();
+ i.oninput=()=>{el.txt=i.innerText.replace(/\n$/,'');soon()};i.onblur=()=>{i.contentEditable='false';commit();render()}});
+addEventListener('keydown',e=>{if(e.key==='Escape'){const m=$('md');if(m)m.remove()}const a=document.activeElement;if(a&&(/INPUT|TEXTAREA|SELECT/.test(a.tagName)||a.isContentEditable))return;
+ const el=sel&&get(sel),m=e.ctrlKey||e.metaKey;
+ if(m&&e.key==='c'&&el){CB=JSON.stringify(el);$('st').textContent='Copied element — Ctrl+V pastes it on any page.';return}
+ if(m&&e.key==='v'&&CB){e.preventDefault();const c=JSON.parse(CB);c.id=uid++;c.x+=24;c.y+=24;delete c.key;P[cur].els.push(c);sel=c.id;render();commit();return}
+ if(m&&e.key==='z'){e.preventDefault();hist(e.shiftKey?1:-1)}else if(m&&e.key==='y'){e.preventDefault();hist(1)}
+ else if(el&&(e.key==='Delete'||e.key==='Backspace')){e.preventDefault();del()}
+ else if(el&&e.key.startsWith('Arrow')){e.preventDefault();const d=e.shiftKey?10:1;if(e.key=='ArrowLeft')el.x-=d;if(e.key=='ArrowRight')el.x+=d;if(e.key=='ArrowUp')el.y-=d;if(e.key=='ArrowDown')el.y+=d;refresh(el)}});
+function readImg(f,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const m=Math.min(1,1400/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*m;c.height=im.height*m;c.getContext('2d').drawImage(im,0,0,c.width,c.height);const id='i'+(++iid);IMG[id]=c.toDataURL(f.type==='image/jpeg'?'image/jpeg':'image/png',.9);cb(id,c.width,c.height)};im.src=fr.result};fr.readAsDataURL(f)}
+$('aT').onclick=()=>{const e=E({t:'text',txt:'নতুন লেখা',x:300,y:600,w:480,h:90,ff:FONTS[0],fs:48,color:'#222222',al:'l',lh:1.3});P[cur].els.push(e);sel=e.id;render();commit()};
+$('aR').onclick=()=>{const e=E({x:360,y:600,w:360,h:200,bg:'#c4202c',r:20});P[cur].els.push(e);sel=e.id;render();commit()};
+$('aI').onclick=()=>$('fA').click();
+$('aC').onclick=()=>{const e=E({x:400,y:500,w:300,h:300,r:'50%',bg:'#c4202c'});P[cur].els.push(e);sel=e.id;render();commit()};
+$('aL').onclick=()=>{const e=E({x:300,y:600,w:480,h:6,r:3,bg:'#222222'});P[cur].els.push(e);sel=e.id;render();commit()};
+$('z+').onclick=()=>{zm=Math.min(3,(zm||1)+.2);fitV()};$('z-').onclick=()=>{zm=Math.max(.3,(zm||1)-.2);fitV()};$('z0').onclick=()=>{zm=0;fitV()};
+$('aA').onclick=()=>{const T=TH[P[cur].th??cur],e=E({t:'art',u:1,x:400,y:500,w:260,h:260,c1:T.a,c2:T.i2,gc:T.g,gl:R[cur][2]});P[cur].els.push(e);sel=e.id;render();commit()};
+$('fA').onchange=e=>{const f=e.target.files[0];if(!f)return;readImg(f,(id,w,h)=>{const W=Math.min(600,w),el=E({t:'img',src:id,x:240,y:300,w:W,h:W*h/w});P[cur].els.push(el);sel=el.id;render();commit()});e.target.value=''};
+$('fR').onchange=e=>{const f=e.target.files[0],el=sel&&get(sel);if(!f||!el)return;readImg(f,id=>{el.src=id;refresh(el);commit()});e.target.value=''};
+$('un').onclick=()=>hist(-1);$('re').onclick=()=>hist(1);
+function fitV(){const a=$('area');scale=Math.max(.1,Math.min((a.clientWidth-28)/1080,(a.clientHeight-28)/1350)*(zm||1));const w=$('wrap');w.style.width=1080*scale+'px';w.style.height=1350*scale+'px';$('stage').style.transform=`scale(${scale})`;$('stage').style.setProperty('--inv',1/scale)}
+new ResizeObserver(fitV).observe($('area'));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function snap(){sel=null;updSel();const fs=[...new Set(P[cur].els.map(e=>e.ff).filter(Boolean))];
+ try{await Promise.all(fs.flatMap(f=>[400,800].map(w=>document.fonts.load(`${w} 24px "${f}"`))))}catch(e){}await document.fonts.ready;render();await sleep(120);
+ const st=$('stage'),t=st.style.transform;st.style.transform='none';
+ try{return await html2canvas($('cv'),{scale:EX.scale||1,width:1080,height:1350,backgroundColor:P[cur].bg||'#ffffff',useCORS:true})}finally{st.style.transform=t}}
+const nm=i=>`${String(i+1).padStart(2,'0')}-${R[i][3]}.${EX.fmt==='jpeg'?'jpg':'png'}`,toB=cv=>new Promise(r=>cv.toBlob(r,EX.fmt==='jpeg'?'image/jpeg':'image/png',.92));
+const dl=(b,fn)=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+const busy=v=>['b1','b2','b3'].forEach(i=>$(i).disabled=v);
+async function all(fn){const k=cur;for(let i=0;i<12;i++){cur=i;$('st').textContent=`Rendering ${i+1}/12…`;await fn(i,await snap())}cur=k;render()}
+$('b1').onclick=async()=>{busy(1);try{dl(await toB(await snap()),nm(cur));render();$('st').textContent='PNG downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
+$('b2').onclick=async()=>{busy(1);try{const z=new JSZip();await all(async(i,c)=>z.file(nm(i),await toB(c)));z.file('captions.txt',P.map((pg,i)=>`── ${R[i][0]} ──\n${tok(pg.cap??capDef(i))}`).join('\n\n'));dl(await z.generateAsync({type:'blob'}),'rashifal-12.zip');$('st').textContent='ZIP downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
+$('b3').onclick=async()=>{busy(1);try{const{jsPDF}=window.jspdf,p=new jsPDF({unit:'px',format:[1080,1350],orientation:'portrait',hotfixes:['px_scaling']});await all(async(i,c)=>{if(i)p.addPage([1080,1350],'portrait');p.addImage(c.toDataURL('image/jpeg',.95),'JPEG',0,0,1080,1350)});p.save('rashifal-12.pdf');$('st').textContent='PDF downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
+function modal(h){const m=document.createElement('div');m.id='md';m.innerHTML=`<div class="bx">${h}</div>`;m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);return m}
+$('bOv').onclick=()=>{const m=modal('<h3 style="margin:0 0 12px">All 12 pages — click one to edit</h3><div class="ovg"></div>'),g=m.querySelector('.ovg');
+ P.forEach((pg,i)=>{const d=document.createElement('div');d.className='th';d.innerHTML='<div class="c2"></div><span class="lb"></span>';const c=d.firstChild;c.style.background=pg.bg;g.appendChild(d);d.querySelector('.lb').textContent=`${i+1}. ${R[i][0]}`;
+  pg.els.forEach(el=>{const n=document.createElement('div');n.className='el';c.appendChild(n);paintEl(n,el)});c.style.transform=`scale(${d.clientWidth/1080})`;
+  d.onclick=()=>{cur=i;sel=null;m.remove();render();persist()}})};
+function parseBulk(t){const out={},L={prem:/^(প্ৰেম|প্রেম|love)$/i,career:/^(কৰ্মজীৱন|কর্মজীবন|career)$/i,edu:/^(শিক্ষা|education)$/i};
+ t.split(/^\s*#\s*/m).slice(1).forEach(b=>{const ls=b.split('\n'),h=ls.shift().trim().toLowerCase(),i=R.findIndex((r,j)=>h.includes(r[0])||h.includes(r[1].toLowerCase())||h===String(j+1));if(i<0)return;
+  const o={};let k=null;ls.forEach(l=>{const m=l.match(/^\s*([^:：\-–]{2,12}?)\s*[:：]\s*(.*)$/),key=m&&Object.keys(L).find(q=>L[q].test(m[1].trim()));if(key){k=key;o[k]=m[2]}else if(k)o[k]+='\n'+l});
+  Object.keys(o).forEach(k=>o[k]=o[k].trim());out[i]=o});return out}
+$('bBulk').onclick=()=>{const m=modal(`<h3 style="margin:0 0 6px">Bulk import predictions</h3><p style="color:var(--mu);font-size:12px;margin:0 0 8px">Paste all 12 rashis in one go. Start each with <code># মেষ</code> (or <code># Aries</code>), then <code>প্ৰেম:</code> <code>কৰ্মজীৱন:</code> <code>শিক্ষা:</code> — text can run over several lines. Only the rashis you include are changed.</p><textarea id="bt" placeholder="# মেষ&#10;প্ৰেম: …&#10;কৰ্মজীৱন: …&#10;শিক্ষা: …"></textarea><div class="bar"><button id="bTp">Fill with template / current text</button><button id="bGo" class="pri">Import into pages</button></div>`);
+ const g=(i,k)=>(P[i].els.find(e=>e.key===k)||{}).txt||'';
+ m.querySelector('#bTp').onclick=()=>{m.querySelector('#bt').value=R.map((r,i)=>`# ${r[0]}\nপ্ৰেম: ${g(i,'prem')}\nকৰ্মজীৱন: ${g(i,'career')}\nশিক্ষা: ${g(i,'edu')}`).join('\n\n')};
+ m.querySelector('#bGo').onclick=()=>{const o=parseBulk(m.querySelector('#bt').value),ks=Object.keys(o);let c=0;ks.forEach(i=>Object.keys(o[i]).forEach(k=>{const e=P[i].els.find(x=>x.key===k);if(e){e.txt=o[i][k];c++}}));m.remove();sel=null;render();commit();$('st').textContent=ks.length?`Imported ${c} sections into ${ks.length} rashis.`:'No rashi headings found — start each block with # মেষ, # বৃষ …'}};
+$('bPrj').onclick=()=>{const m=modal('<h3 style="margin:0 0 6px">Project</h3><p style="color:var(--mu);font-size:12px;margin:0 0 8px">Your work lives in this browser only. Export a backup file to keep it safe or move it to another device.</p><div class="bar"><button id="pE" class="pri">⬇ Export project (.json)</button><button id="pI">⬆ Import project</button></div><div class="bar"><button id="pR">Rebuild all 12 designs (keeps text)</button><button id="pX" style="color:#c0392b">Erase everything</button></div><input type="file" id="pF" accept=".json" hidden>');
+ m.querySelector('#pE').onclick=()=>dl(new Blob([JSON.stringify({P,IMG,V,EX})],{type:'application/json'}),'rashifal-project.json');
+ m.querySelector('#pI').onclick=()=>m.querySelector('#pF').click();
+ m.querySelector('#pF').onchange=e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const d=JSON.parse(fr.result);if(!Array.isArray(d.P)||d.P.length!==12)throw 0;P=d.P;IMG=d.IMG||{};Object.assign(V,d.V);Object.assign(EX,d.EX);uid=Math.max(1,...P.flatMap(p=>p.els.map(x=>x.id)))+1;iid=Math.max(0,...Object.keys(IMG).map(k=>+k.slice(1)));sel=null;m.remove();render();commit();$('st').textContent='Project imported.'}catch(x){$('st').textContent='That file is not a valid project.'}};fr.readAsText(f)};
+ m.querySelector('#pR').onclick=()=>{if(!confirm('Rebuild all 12 pages with their default rashi designs?'))return;P.forEach((_,j)=>rebuild(j,j));m.remove();sel=null;render();commit()};
+ m.querySelector('#pX').onclick=()=>{if(!confirm('Erase ALL pages, images and settings?'))return;try{localStorage.removeItem(SK)}catch(x){}location.reload()}};
+render();fitV();commit();document.fonts.ready.then(()=>render());
+</script>
+</body>
+</html>
