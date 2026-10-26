@@ -284,5 +284,6 @@ $('bPrj').onclick=()=>{const m=modal('<h3 style="margin:0 0 6px">Project</h3><p 
  m.querySelector('#pX').onclick=()=>{if(!confirm('Erase ALL pages, images and settings?'))return;try{localStorage.removeItem(SK)}catch(x){}location.reload()}};
 render();fitV();commit();document.fonts.ready.then(()=>render());
 </script>
+<script src="templates-addon.js"></script> just before </body>
 </body>
 </html>
