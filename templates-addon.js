@@ -1,4 +1,4 @@
-/* Rashifal Studio — extra template sets. Include AFTER the main <script>:  <script src="templates-addon.js"></script> */
+/* Rashifal Studio - extra template sets, slide controls. Loaded after the main script. */
 (()=>{
 const RZ=R.map(x=>x.slice()),tplW=tpl,rbW=rebuild;TH[12]=TH[8];
 let SET='weekly';
@@ -6,7 +6,8 @@ const SETS={weekly:'সাপ্তাহিক ৰাশিফল',monthly:'ম
 const sk=s=>s==='weekly'?SK:SK+'_'+s,NB=['১','২','৩'];
 const mk=()=>{const X=[];return[X,o=>X.push(E({t:'rect',...o})),o=>X.push(E({t:'text',ff:FONTS[0],fs:24,color:'#222222',al:'l',lh:1.5,txt:'',...o}))]};
 const FT=(rect,txt,a,b)=>{rect({key:'ft',x:40,y:1226,w:1000,h:96,r:48,bg:a,bg2:b,sd:1});txt({key:'ftt',txt:'গার্চেলৰ বিলিং: হোৱাটছএপ {{phone}}  ·  ফলো আৰু শ্বেয়াৰ কৰক 🔔',x:70,y:1226,w:940,h:96,fs:27,b:1,color:'#ffffff',al:'c',va:1,lh:1.3,fit:1})};
-const art=(T,r,x,y,s)=>E({t:'art',key:'art',u:1,x,y,w:s,h:s,c1:T.a,c2:T.i2,gc:T.g,gl:r[2]});
+let CAN=8;for(let i=13;i<40;i++)TH[i]=TH[i%12];
+const art=(T,r,x,y,s)=>E({t:'art',key:'art',u:1,ic:1,x,y,w:s,h:s,c1:T.a,c2:T.i2,gc:T.g,gl:r[2]});
 
 /* ---------- MONTHLY (dark cosmic cards) ---------- */
 function MO(i,ti){const r=RZ[i],T=TH[ti],p=T.p,d=T.d,K='#0f0c1d',[X,rect,txt]=mk();
@@ -59,7 +60,7 @@ function RP(i,ti,v){const r=RZ[i-1],T=TH[ti],p=T.p,d=T.d,K='#0c1033',[X,rect,txt
  FT(rect,txt,p,d);return X}
 
 /* ---------- INSTAGRAM CAROUSEL (8 generic slides) ---------- */
-function CA(i,ti){const T=TH[ti],p=T.p,d=T.d,N=8,[X,rect,txt]=mk();
+function CA(i,ti){const T=TH[ti],p=T.p,d=T.d,N=CAN,[X,rect,txt]=mk();
  if(i===0){rect({key:'bg',w:1080,h:1350,bg:p,bg2:d});rect({key:'o1',x:620,y:-260,w:800,h:800,r:'50%',bg:'#ffffff',op:.1});rect({key:'o2',x:-200,y:900,w:600,h:600,r:'50%',bg:'#ffffff',op:.08});
   txt({key:'title',u:1,txt:'আপোনাৰ শিৰোনাম ইয়াত',x:70,y:340,w:940,h:440,fs:112,b:1,color:'#ffffff',lh:1.25,va:1,fit:1});
   txt({key:'sub',u:1,txt:'এটি চমু উপশিৰোনাম',x:70,y:820,w:940,h:120,fs:40,color:T.g,lh:1.4});
@@ -82,8 +83,7 @@ function CA(i,ti){const T=TH[ti],p=T.p,d=T.d,N=8,[X,rect,txt]=mk();
 const tplX=(i,ti)=>SET==='monthly'?MO(i,ti):SET==='carousel'?CA(i,ti):i?RP(i,ti,SET==='nakshatra'?1:0):CV(ti,SET==='nakshatra'?1:0);
 tpl=function(i,ti=i){return SET==='weekly'?tplW(i,ti):tplX(i,ti)};
 rebuild=function(pi,ti){rbW(pi,SET==='carousel'&&ti===pi?(P[pi].th??8):ti)};
-all=async function(fn){const k=cur;for(let i=0;i<P.length;i++){cur=i;$('st').textContent=`Rendering ${i+1}/${P.length}…`;await fn(i,await snap())}cur=k;render()};
-persist=function(){try{localStorage.setItem(sk(SET),JSON.stringify({P,IMG,cur,V,EX}))}catch(e){$('st').textContent='Browser storage is full — large images may not be saved.'}};
+persist=function(){try{localStorage.setItem(sk(SET),JSON.stringify({P,IMG,cur,V,EX,RL:R}))}catch(e){$('st').textContent='Browser storage is full — large images may not be saved.'}};
 
 const LB=s=>{const f=q=>RZ.map(x=>[x[0],x[1],x[2],q+x[3]]);
  return s==='weekly'?RZ.map(x=>x.slice()):s==='monthly'?f('monthly-'):s==='carousel'?[1,2,3,4,5,6,7,8].map(k=>['ছ্লাইড '+k,'Slide '+k,String(k),'slide']):[['কভাৰ','Cover','✦','cover'],...f(s+'-')]};
@@ -92,14 +92,26 @@ const capFor=i=>{if(SET==='weekly')return;if(SET==='carousel')return '✨\n{{han
  const w=SET==='transit'?'গ্ৰহ গোচৰ':'নক্ষত্ৰ গোচৰ';
  return i?`${r[0]} ৰাশিৰ ওপৰত ${w}ৰ প্ৰভাৱ ✨\n{{week}}\n\n#ৰাশিফল #${r[1]} #${SET} #assam`:`${w} — ১২ ৰাশিৰ ফল ✨\n{{week}}\n\nSwipe কৰি আপোনাৰ ৰাশি চাওক 👉\n#ৰাশিফল #${SET} #assam`};
 function loadSet(){R.length=0;R.push(...LB(SET));let d=null;try{d=JSON.parse(localStorage.getItem(sk(SET))||'null')}catch(e){}
+ if(d&&d.P&&d.RL&&d.RL.length===d.P.length){R.length=0;R.push(...d.RL)}
  if(d&&d.P&&d.P.length===R.length){P=d.P;Object.assign(IMG,d.IMG||{})}
  else P=R.map((_,i)=>{const th=SET==='carousel'?8:i;return{bg:pageBg(th),th,els:tpl(i,th),cap:capFor(i)}});
  uid=Math.max(1,...P.flatMap(p=>p.els.map(e=>e.id)))+1;iid=Math.max(0,...Object.keys(IMG).map(k=>+k.slice(1)));
- cur=0;sel=null;H=[];hi=-1;render();fitV();commit()}
+ CAN=R.length;cur=0;sel=null;H=[];hi=-1;render();fitV();commit()}
 
 const ss=document.createElement('select');ss.style.cssText='border-radius:10px;padding:7px;font:inherit;font-weight:700;border:0;max-width:210px';
 ss.innerHTML=Object.entries(SETS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
 $('bOv').before(ss);$('b2').textContent='⬇ ZIP';$('b3').textContent='⬇ PDF';
 ss.onchange=()=>{persist();SET=ss.value;try{localStorage.setItem('rashi_set',SET)}catch(e){}loadSet()};
-try{const sv=localStorage.getItem('rashi_set');if(sv&&SETS[sv]&&sv!=='weekly'){SET=sv;ss.value=sv;loadSet()}}catch(e){}
+
+/* ---------- add / duplicate / delete slides ---------- */
+function renum(){CAN=P.length;P.forEach((pg,i)=>{const nm=pg.els.find(e=>e.key==='num');if(nm)nm.txt=String(i).padStart(2,'0');
+ const dt=pg.els.filter(e=>/^dt\d+$/.test(e.key));if(dt.length){pg.els=pg.els.filter(e=>!dt.includes(e));const c=TH[pg.th??8].p;for(let k=0;k<P.length;k++)pg.els.push(E({t:'rect',key:'dt'+k,x:70+k*38,y:1250,w:26,h:8,r:4,bg:k===i?c:mix(c,'#ffffff',.65)}))}})}
+const done=()=>{sel=null;renum();render();commit()};
+function addS(){const th=P[cur].th??cur,n=cur+1;CAN=P.length+1;const els=CA(1,th);els.find(e=>e.key==='num').txt=String(n).padStart(2,'0');
+ P.splice(n,0,{bg:pageBg(th),th,els,cap:'✨\n{{handle}}\n\n#assam'});R.splice(n,0,['ছ্লাইড '+(n+1),'Slide '+(n+1),'＋','slide']);cur=n;done()}
+function dupS(){const c=JSON.parse(JSON.stringify(P[cur]));c.els.forEach(e=>e.id=uid++);P.splice(cur+1,0,c);R.splice(cur+1,0,R[cur].slice());cur++;done()}
+function delS(){if(P.length<2||!confirm('Delete this slide?'))return;P.splice(cur,1);R.splice(cur,1);cur=Math.min(cur,P.length-1);done()}
+const chW=chips;chips=function(){chW();[['＋ Slide','Add a new slide after this one',addS],['⧉ Copy','Duplicate this slide',dupS],['🗑','Delete this slide',delS]].forEach(([t,ti,f])=>{const b=document.createElement('button');b.textContent=t;b.title=ti;b.style.flex='0 0 auto';b.onclick=f;$('chips').appendChild(b)})};
+hist=function(d){const k=hi+d;if(k<0||k>=H.length)return;hi=k;P=JSON.parse(H[hi]);while(R.length>P.length)R.pop();while(R.length<P.length)R.push(['ছ্লাইড '+(R.length+1),'Slide','＋','slide']);cur=Math.min(cur,P.length-1);sel=null;render();persist()};
+try{const sv=localStorage.getItem('rashi_set');if(sv&&SETS[sv]&&sv!=='weekly'){SET=sv;ss.value=sv;loadSet()}else{const w=JSON.parse(localStorage.getItem(SK)||'null');if(w&&w.RL&&w.P&&w.RL.length===w.P.length&&w.P.length===P.length){R.length=0;R.push(...w.RL)}CAN=R.length;render();fitV()}}catch(e){}
 })();
