@@ -71,7 +71,7 @@ aside .ck{display:flex;gap:7px;align-items:center;color:var(--tx);font-size:13px
 </head>
 <body>
 <header><div class="logo">♉&#xFE0E;</div><b>ৰাশিফল Studio<small id="prog"></small></b><div class="sp"></div>
- <button id="bOv">▦ Overview</button><button id="bBulk">📥 Bulk text</button><button id="bPrj">💾 Project</button><button id="un">↶</button><button id="re">↷</button><button class="pr" id="b1">⬇ PNG</button><button id="b2">⬇ ZIP (12)</button><button id="b3">⬇ PDF (12)</button></header>
+ <button id="bOv">▦ Overview</button><button id="bBulk">📥 Bulk text</button><button id="bPrj">💾 Project</button><button id="un">↶</button><button id="re">↷</button><button class="pr" id="b1">⬇ PNG</button><button id="b2">⬇ ZIP</button><button id="b3">⬇ PDF</button></header>
 <div class="main">
  <nav class="tools"><button id="aT"><i>T</i>Text</button><button id="aR"><i>◼</i>Shape</button><button id="aI"><i>🖼</i>Image</button><button id="aA"><i>✦</i>Badge</button><button id="aC"><i>●</i>Circle</button><button id="aL"><i>―</i>Line</button></nav>
  <div class="area" id="area"><div id="wrap"><div id="stage"><div id="cv"></div><div id="sel"></div><div id="guides"></div></div></div></div>
@@ -85,7 +85,7 @@ aside .ck{display:flex;gap:7px;align-items:center;color:var(--tx);font-size:13px
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 const R=[["মেষ","Aries","♈","aries"],["বৃষ","Taurus","♉","taurus"],["মিথুন","Gemini","♊","gemini"],["কৰ্কট","Cancer","♋","cancer"],["সিংহ","Leo","♌","leo"],["কন্যা","Virgo","♍","virgo"],["তুলা","Libra","♎","libra"],["বৃশ্চিক","Scorpio","♏","scorpio"],["ধনু","Sagittarius","♐","sagittarius"],["মকৰ","Capricorn","♑","capricorn"],["কুম্ভ","Aquarius","♒","aquarius"],["মীন","Pisces","♓","pisces"]];
-const FONTS=["Noto Sans Bengali","Hind Siliguri","Baloo Da 2","Noto Serif Bengali","Anek Bangla","Arial"];
+const FONTS=["Noto Serif Bengali","Noto Sans Bengali","Hind Siliguri","Baloo Da 2","Anek Bangla","Arial"];
 const OL='4px 0 #fff,-4px 0 #fff,0 4px #fff,0 -4px #fff,3px 3px #fff,-3px -3px #fff,3px -3px #fff,-3px 3px #fff,7px 10px 0 rgba(0,0,0,.28)';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let uid=1,iid=0,IMG={},P=[],cur=0,sel=null,H=[],hi=-1,drag=null,scale=1,tm;
@@ -105,7 +105,7 @@ function tpl(i,ti=i){const r=R[i],T=TH[ti],p=T.p,d=T.d,X=[];
  txt({key:'head',txt:'আপোনাৰ\nসাপ্তাহিক',x:44,y:90,w:250,h:130,fs:36,b:1,color:'#ffffff'});
  X.push(weekEl(d));
  txt({key:'title',txt:'ৰাশিফল',x:290,y:44,w:500,h:200,fs:150,b:1,color:p,al:'c',lh:1.3,ol:1});
- X.push(E({t:'art',key:'art',u:1,x:790,y:22,w:250,h:250,c1:T.a,c2:T.i2,gc:T.g,gl:r[2]}));
+ X.push(E({t:'art',key:'art',u:1,x:790,y:22,w:250,h:250,c1:T.a,c2:T.i2,gc:T.g,gl:r[2],ic:1}));
  rect({key:'pill',x:40,y:302,w:640,h:88,r:44,bg:d,bg2:p,sd:1});
  rect({key:'pdot',x:40,y:302,w:88,h:88,r:'50%',bg:mix(p,'#ffffff',.4),bg2:d});
  txt({key:'pt',u:1,txt:`${r[0]} ৰাশি (${r[1]})`,x:142,y:302,w:530,h:88,fs:44,b:1,color:'#ffffff',va:1,lh:1.2});
@@ -141,6 +141,7 @@ function paintEl(n,el){const s=n.style;
  if(el.r!=null&&el.r!=='')s.borderRadius=typeof el.r==='number'?el.r+'px':el.r;
  if(el.bw)s.border=`${el.bw}px solid ${el.bc||'#000'}`;
  if(el.sd)s.boxShadow='0 5px 0 rgba(0,0,0,.3)';
+ if(el.t==='art'&&el.ic&&window.ICON){n.innerHTML=ICON(el);return}
  if(el.t==='art'){const st=(x,y,r)=>`<path d="M${x} ${y-r}Q${x} ${y} ${x+r} ${y}Q${x} ${y} ${x} ${y+r}Q${x} ${y} ${x-r} ${y}Q${x} ${y} ${x} ${y-r}z" fill="#fff" fill-opacity=".85"/>`;let a='';for(let k=0;k<12;k++){const q=k*Math.PI/6;a+=`<circle cx="${120+100*Math.sin(q)}" cy="${120-100*Math.cos(q)}" r="${k%3?2.4:4.4}" fill="#fff" fill-opacity=".85"/>`}
  n.innerHTML=`<svg viewBox="0 0 240 240" width="${el.w}" height="${el.h}"><defs><radialGradient id="ag${el.id}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="${el.c1}"/><stop offset="1" stop-color="${el.c2}"/></radialGradient></defs><circle cx="120" cy="120" r="118" fill="url(#ag${el.id})"/><circle cx="120" cy="120" r="114" fill="none" stroke="#fff" stroke-width="5"/><circle cx="120" cy="120" r="88" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>${a}${st(60,70,9)}${st(182,64,7)}${st(188,176,10)}${st(54,172,6)}<text x="120" y="152" text-anchor="middle" font-size="100" fill="${el.gc}" font-family="'Noto Sans Symbols 2','Segoe UI Symbol','DejaVu Sans',sans-serif">${esc(el.gl)}&#xFE0E;</text></svg>`;return}
  if(el.t==='img'){n.innerHTML=`<img src="${IMG[el.src]||''}">`;return}
@@ -177,7 +178,7 @@ function panel(){const el=sel&&get(sel),p=$('props');
  const c=(k,l)=>`<label>${l}<span class="cr"><input type="color" data-k="${k}" value="${hex(el[k])}"><button data-clr="${k}">✕</button></span></label>`;
  const ck=(k,l)=>`<label class="ck"><input type="checkbox" data-k="${k}" ${el[k]?'checked':''}> ${l}</label>`;
  if(el.t==='text')h+=`<h5>Text</h5><textarea data-k="txt">${esc(el.txt)}</textarea><div style="font-size:11px;color:var(--mu)">Variables: {{week}} {{phone}} {{handle}}</div><label>Font<select data-k="ff">${FONTS.map(f=>`<option ${f===el.ff?'selected':''}>${f}</option>`).join('')}</select></label><div class="g2">${n('fs','Size')}${n('lh','Line height',.1)}</div><div class="g2">${c('color','Colour')}<label>Align<select data-k="al">${[['l','Left'],['c','Center'],['r','Right'],['j','Justify']].map(([v,t])=>`<option value="${v}" ${el.al===v?'selected':''}>${t}</option>`).join('')}</select></label></div>${ck('b','Bold')}${ck('va','Centre vertically')}${ck('fit','Shrink text to fit box')}${ck('ol','White outline')}`;
- if(el.t==='art')h+=`<h5>Zodiac badge</h5><label>Symbol<input type="text" data-k="gl" value="${esc(el.gl)}"></label><div class="g2">${c('c1','Colour 1')}${c('c2','Colour 2')}</div>${c('gc','Symbol colour')}`;
+ if(el.t==='art')h+=`<h5>Zodiac badge</h5><label>Symbol<input type="text" data-k="gl" value="${esc(el.gl)}"></label><div class="g2">${c('c1','Colour 1')}${c('c2','Colour 2')}</div>${c('gc','Symbol colour')}${ck('ic','Illustrated icon')}`;
  if(el.t==='img')h+=`<div class="bar"><button id="repl">Replace image</button></div>`;
  if(el.t==='rect'||el.t==='text')h+=`<h5>Fill &amp; border</h5><div class="g2">${c('bg','Fill')}${c('bg2','Fill 2')}</div><div class="g2">${n('r','Radius')}${n('bw','Border')}</div>${c('bc','Border colour')}${ck('sd','Shadow')}`;
  h+=`<h5>Arrange</h5><div class="bar" style="margin-top:6px">${[['l','⇤','Left'],['c','↔','Centre'],['r','⇥','Right'],['t','⤒','Top'],['m','↕','Middle'],['b','⤓','Bottom']].map(a=>`<button data-al="${a[0]}" title="Align ${a[2]} on page" style="min-width:36px">${a[1]}</button>`).join('')}</div><label>Opacity<input type="range" data-k="op" min="0" max="1" step=".05" value="${el.op??1}" style="width:100%"></label>${ck('u','Different on each rashi (apply-to-all keeps my content)')}${ck('lk','Lock position')}${ck('hd','Hide')}
@@ -245,22 +246,26 @@ $('aI').onclick=()=>$('fA').click();
 $('aC').onclick=()=>{const e=E({x:400,y:500,w:300,h:300,r:'50%',bg:'#c4202c'});P[cur].els.push(e);sel=e.id;render();commit()};
 $('aL').onclick=()=>{const e=E({x:300,y:600,w:480,h:6,r:3,bg:'#222222'});P[cur].els.push(e);sel=e.id;render();commit()};
 $('z+').onclick=()=>{zm=Math.min(3,(zm||1)+.2);fitV()};$('z-').onclick=()=>{zm=Math.max(.3,(zm||1)-.2);fitV()};$('z0').onclick=()=>{zm=0;fitV()};
-$('aA').onclick=()=>{const T=TH[P[cur].th??cur],e=E({t:'art',u:1,x:400,y:500,w:260,h:260,c1:T.a,c2:T.i2,gc:T.g,gl:R[cur][2]});P[cur].els.push(e);sel=e.id;render();commit()};
+$('aA').onclick=()=>{const T=TH[P[cur].th??cur],e=E({t:'art',u:1,x:400,y:500,w:260,h:260,c1:T.a,c2:T.i2,gc:T.g,gl:R[cur][2],ic:1});P[cur].els.push(e);sel=e.id;render();commit()};
 $('fA').onchange=e=>{const f=e.target.files[0];if(!f)return;readImg(f,(id,w,h)=>{const W=Math.min(600,w),el=E({t:'img',src:id,x:240,y:300,w:W,h:W*h/w});P[cur].els.push(el);sel=el.id;render();commit()});e.target.value=''};
 $('fR').onchange=e=>{const f=e.target.files[0],el=sel&&get(sel);if(!f||!el)return;readImg(f,id=>{el.src=id;refresh(el);commit()});e.target.value=''};
 $('un').onclick=()=>hist(-1);$('re').onclick=()=>hist(1);
 function fitV(){const a=$('area');scale=Math.max(.1,Math.min((a.clientWidth-28)/1080,(a.clientHeight-28)/1350)*(zm||1));const w=$('wrap');w.style.width=1080*scale+'px';w.style.height=1350*scale+'px';$('stage').style.transform=`scale(${scale})`;$('stage').style.setProperty('--inv',1/scale)}
 new ResizeObserver(fitV).observe($('area'));
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function snap(){sel=null;updSel();const fs=[...new Set(P[cur].els.map(e=>e.ff).filter(Boolean))];
- try{await Promise.all(fs.flatMap(f=>[400,800].map(w=>document.fonts.load(`${w} 24px "${f}"`))))}catch(e){}await document.fonts.ready;render();await sleep(120);
- const st=$('stage'),t=st.style.transform;st.style.transform='none';
- try{return await html2canvas($('cv'),{scale:EX.scale||1,width:1080,height:1350,backgroundColor:P[cur].bg||'#ffffff',useCORS:true})}finally{st.style.transform=t}}
+async function snap(pi=cur){sel=null;updSel();const pg=P[pi],fs=[...new Set(pg.els.map(e=>e.ff).filter(Boolean))];
+ try{await Promise.all(fs.flatMap(f=>[400,800].map(w=>document.fonts.load(`${w} 24px "${f}"`))))}catch(e){}await document.fonts.ready;
+ $('cv').innerHTML='';
+ const w=document.createElement('div');w.style.cssText='position:fixed;left:-20000px;top:0;width:1080px;height:1350px';
+ const c=document.createElement('div');c.style.cssText='position:relative;width:1080px;height:1350px;overflow:hidden;background:'+(pg.bg||'#fff');w.appendChild(c);document.body.appendChild(w);
+ pg.els.forEach(el=>{const n=document.createElement('div');n.className='el';c.appendChild(n);paintEl(n,el)});
+ await sleep(150);
+ try{return await html2canvas(c,{scale:EX.scale||1,width:1080,height:1350,backgroundColor:pg.bg||'#ffffff',useCORS:true,onclone:(d,n)=>{n.parentNode.style.left='0'}})}finally{w.remove()}}
 const nm=i=>`${String(i+1).padStart(2,'0')}-${R[i][3]}.${EX.fmt==='jpeg'?'jpg':'png'}`,toB=cv=>new Promise(r=>cv.toBlob(r,EX.fmt==='jpeg'?'image/jpeg':'image/png',.92));
 const dl=(b,fn)=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
 const busy=v=>['b1','b2','b3'].forEach(i=>$(i).disabled=v);
-async function all(fn){const k=cur;for(let i=0;i<12;i++){cur=i;$('st').textContent=`Rendering ${i+1}/12…`;await fn(i,await snap())}cur=k;render()}
-$('b1').onclick=async()=>{busy(1);try{dl(await toB(await snap()),nm(cur));render();$('st').textContent='PNG downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
+async function all(fn){const k=cur;for(let i=0;i<P.length;i++){cur=i;$('st').textContent=`Rendering ${i+1}/${P.length}…`;await fn(i,await snap(i))}cur=k;render()}
+$('b1').onclick=async()=>{busy(1);try{dl(await toB(await snap(cur)),nm(cur));render();$('st').textContent='PNG downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
 $('b2').onclick=async()=>{busy(1);try{const z=new JSZip();await all(async(i,c)=>z.file(nm(i),await toB(c)));z.file('captions.txt',P.map((pg,i)=>`── ${R[i][0]} ──\n${tok(pg.cap??capDef(i))}`).join('\n\n'));dl(await z.generateAsync({type:'blob'}),'rashifal-12.zip');$('st').textContent='ZIP downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
 $('b3').onclick=async()=>{busy(1);try{const{jsPDF}=window.jspdf,p=new jsPDF({unit:'px',format:[1080,1350],orientation:'portrait',hotfixes:['px_scaling']});await all(async(i,c)=>{if(i)p.addPage([1080,1350],'portrait');p.addImage(c.toDataURL('image/jpeg',.95),'JPEG',0,0,1080,1350)});p.save('rashifal-12.pdf');$('st').textContent='PDF downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
 function modal(h){const m=document.createElement('div');m.id='md';m.innerHTML=`<div class="bx">${h}</div>`;m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);return m}
@@ -284,6 +289,7 @@ $('bPrj').onclick=()=>{const m=modal('<h3 style="margin:0 0 6px">Project</h3><p 
  m.querySelector('#pX').onclick=()=>{if(!confirm('Erase ALL pages, images and settings?'))return;try{localStorage.removeItem(SK)}catch(x){}location.reload()}};
 render();fitV();commit();document.fonts.ready.then(()=>render());
 </script>
-<script src="templates-addon.js"></script> just before </body>
+<script src="zodiac-icons.js"></script>
+<script src="templates-addon.js"></script>
 </body>
 </html>
