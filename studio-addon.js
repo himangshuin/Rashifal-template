@@ -45,7 +45,7 @@ async function editor(el){let base,cur0;try{base=await lo(IMG[el.orig||el.src]);
  <label style="display:flex;gap:6px;margin:6px 0;font-size:13px"><input type="checkbox" id="ec" checked> Pick colour: only the connected area</label><div class="ew"></div><div id="es" style="font-size:12px;color:var(--mu);margin:6px 0">Ready</div>
  <div class="bar"><button class="pri" data-e="ok">Apply</button><button data-e="no">Cancel</button></div>`);
  m.querySelector('.ew').appendChild(K);
- const U=[],snp=()=>{U.push(k.getImageData(0,0,W,H));if(U.length>8)U.shift()},say=t=>m.querySelector('#es').textContent=t,V$=i=>+m.querySelector(i).value;
+ const U=[],snp=()=>{U.push(k.getImageData(0,0,W,H));if(U.length>8)U.shift()},say=t=>{m.querySelector('#es').textContent=t},V$=i=>+m.querySelector(i).value;
  let mode='erase',dn=0,lx,ly;
  const pt=e=>{const r=K.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height,W/r.width]};
  const dab=(x,y,sc)=>{const r=V$('#eb')*sc/2;k.save();
@@ -60,7 +60,7 @@ async function editor(el){let base,cur0;try{base=await lo(IMG[el.orig||el.src]);
  K.onpointermove=e=>{if(!dn)return;const[x,y,sc]=pt(e),n=Math.max(1,Math.ceil(Math.hypot(x-lx,y-ly)/(V$('#eb')*sc/6)));for(let i=1;i<=n;i++)dab(lx+(x-lx)*i/n,ly+(y-ly)*i/n,sc);lx=x;ly=y};
  K.onpointerup=K.onpointercancel=()=>dn=0;
  const AI=async()=>{try{say('Loading AI model — the first run downloads about 40 MB, after that it is instant…');snp();
-   const res=await rmbg(await(await fetch(IMG[el.orig||el.src])).blob(),(kk,c,t)=>say(String(kk).startsWith('fetch')?`Downloading model ${t?Math.round(c/t*100):''}%`:'Removing background…'));
+   const res=await rmbg(await(await fetch(IMG[el.orig||el.src])).blob(),(kk,c,t)=>{say(String(kk).startsWith('fetch')?`Downloading model ${t?Math.round(c/t*100):''}%`:'Removing background…')});
    const im=await lo(URL.createObjectURL(res));k.clearRect(0,0,W,H);k.drawImage(im,0,0,W,H);say('Done — refine with Erase / Restore, then Apply.')}
   catch(x){U.pop();say('AI engine could not load ('+(x.message||x)+'). Check your internet, or use Pick colour + Erase.')}};
  m.addEventListener('click',e=>{const b=e.target.closest('[data-e]');if(!b)return;const a=b.dataset.e;
