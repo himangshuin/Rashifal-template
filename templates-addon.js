@@ -111,6 +111,7 @@ function addS(){const th=P[cur].th??cur,n=cur+1;CAN=P.length+1;const els=CA(1,th
  P.splice(n,0,{bg:pageBg(th),th,els,cap:'✨\n{{handle}}\n\n#assam'});R.splice(n,0,['ছ্লাইড '+(n+1),'Slide '+(n+1),'＋','slide']);cur=n;done()}
 function dupS(){const c=JSON.parse(JSON.stringify(P[cur]));c.els.forEach(e=>e.id=uid++);P.splice(cur+1,0,c);R.splice(cur+1,0,R[cur].slice());cur++;done()}
 function delS(){if(P.length<2||!confirm('Delete this slide?'))return;P.splice(cur,1);R.splice(cur,1);cur=Math.min(cur,P.length-1);done()}
+window.RS={ins(pg){const n=cur+1;P.splice(n,0,pg);R.splice(n,0,['ছ্লাইড '+(n+1),'Slide '+(n+1),'＋','slide']);cur=n;done()}};
 const chW=chips;chips=function(){chW();[['＋ Slide','Add a new slide after this one',addS],['⧉ Copy','Duplicate this slide',dupS],['🗑','Delete this slide',delS]].forEach(([t,ti,f])=>{const b=document.createElement('button');b.textContent=t;b.title=ti;b.style.flex='0 0 auto';b.onclick=f;$('chips').appendChild(b)})};
 hist=function(d){const k=hi+d;if(k<0||k>=H.length)return;hi=k;P=JSON.parse(H[hi]);while(R.length>P.length)R.pop();while(R.length<P.length)R.push(['ছ্লাইড '+(R.length+1),'Slide','＋','slide']);cur=Math.min(cur,P.length-1);sel=null;render();persist()};
 try{const sv=localStorage.getItem('rashi_set');if(sv&&SETS[sv]&&sv!=='weekly'){SET=sv;ss.value=sv;loadSet()}else{const w=JSON.parse(localStorage.getItem(SK)||'null');if(w&&w.RL&&w.P&&w.RL.length===w.P.length&&w.P.length===P.length){R.length=0;R.push(...w.RL)}CAN=R.length;render();fitV()}}catch(e){}
