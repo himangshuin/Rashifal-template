@@ -1,0 +1,99 @@
+/* Elements library (icons, astro, arrows, shapes, decor, backgrounds) + ready-made template designs */
+(()=>{
+const SB=(n,r1,r2)=>Array.from({length:n*2},(_,j)=>{const a=j*Math.PI/n,r=j%2?r2:r1;return(50+r*Math.sin(a)).toFixed(1)+','+(50-r*Math.cos(a)).toFixed(1)}).join(' ');
+const FL=(n,rx,ry,cy)=>Array.from({length:n},(_,j)=>`<ellipse cx="50" cy="${cy}" rx="${rx}" ry="${ry}" fill="{A}" transform="rotate(${j*360/n} 50 50)" opacity=".9"/>`).join('');
+const ST='fill="none" stroke="{A}" stroke-linecap="round" stroke-linejoin="round"';
+const L=[ // [category,name,c1,c2,viewBox,inner]
+['Icons','Chat call','#25d366','#ffffff',0,'<path d="M50 8a42 42 0 1 1-21 78l-19 5 5-18A42 42 0 0 1 50 8z" fill="{A}"/><path d="M36 30c-4 3-5 9 1 18s14 16 22 17c5 0 9-3 8-7l-9-4-4 3c-5-2-10-8-12-13l3-4-3-9z" fill="{B}"/>'],
+['Icons','Chat bubble',0,0,0,'<path d="M15 20h70a8 8 0 0 1 8 8v36a8 8 0 0 1-8 8H48L28 90V72H15a8 8 0 0 1-8-8V28a8 8 0 0 1 8-8z" fill="{A}"/><circle cx="32" cy="46" r="5" fill="{B}"/><circle cx="50" cy="46" r="5" fill="{B}"/><circle cx="68" cy="46" r="5" fill="{B}"/>'],
+['Icons','Bell',0,0,0,'<path d="M50 10c-16 0-26 12-26 28v18l-8 10h68l-8-10V38c0-16-10-28-26-28z" fill="{A}"/><circle cx="50" cy="84" r="8" fill="{A}"/>'],
+['Icons','Heart','#e0272f',0,0,'<path d="M50 90C8 58 6 28 28 20c10-4 18 2 22 10 4-8 12-14 22-10 22 8 20 38-22 70z" fill="{A}"/>'],
+['Icons','Share',0,0,0,`<path d="M30 42v44h40V42M50 62V10M32 28l18-18 18 18" ${ST} stroke-width="8"/>`],
+['Icons','Bookmark',0,0,0,'<path d="M26 10h48v82L50 70 26 92z" fill="{A}"/>'],
+['Icons','Location pin','#e0272f',0,0,'<path d="M50 8c-18 0-30 13-30 30 0 22 30 54 30 54s30-32 30-54C80 21 68 8 50 8z" fill="{A}"/><circle cx="50" cy="38" r="12" fill="{B}"/>'],
+['Icons','Check','#7aa72a',0,0,`<path d="M14 54l25 25 47-55" ${ST} stroke-width="14"/>`],
+['Icons','Star','#f5b301',0,0,'<path d="M50 8l12 27 29 3-22 20 7 29-26-15-26 15 7-29L9 38l29-3z" fill="{A}"/>'],
+['Icons','Camera',0,0,0,'<rect x="8" y="26" width="84" height="58" rx="10" fill="{A}"/><path d="M34 26l6-12h20l6 12z" fill="{A}"/><circle cx="50" cy="55" r="18" fill="{B}"/><circle cx="50" cy="55" r="10" fill="{A}"/>'],
+['Icons','Photo app',0,0,0,`<rect x="10" y="10" width="80" height="80" rx="24" ${ST} stroke-width="8"/><circle cx="50" cy="50" r="19" ${ST} stroke-width="8"/><circle cx="72" cy="28" r="5" fill="{A}"/>`],
+['Icons','Mail',0,0,0,'<rect x="8" y="22" width="84" height="56" rx="8" fill="{A}"/><path d="M12 28l38 28 38-28" fill="none" stroke="{B}" stroke-width="6" stroke-linejoin="round"/>'],
+['Icons','Calendar',0,0,0,'<rect x="10" y="18" width="80" height="72" rx="10" fill="{A}"/><rect x="22" y="44" width="56" height="36" rx="4" fill="{B}"/><path d="M30 8v18M70 8v18" stroke="{A}" stroke-width="7" stroke-linecap="round"/>'],
+['Icons','Clock',0,0,0,`<circle cx="50" cy="50" r="42" fill="{A}"/><path d="M50 24v28l18 10" ${ST.replace('{A}','{B}')} stroke-width="7"/>`],
+['Astro','Crescent moon','#f5c542',0,0,'<path d="M64 8a42 42 0 1 0 28 70A34 34 0 0 1 64 8z" fill="{A}"/>'],
+['Astro','Full moon','#f2d27a','#b8913a',0,'<circle cx="50" cy="50" r="42" fill="{A}"/><circle cx="36" cy="38" r="8" fill="{B}" opacity=".5"/><circle cx="62" cy="58" r="11" fill="{B}" opacity=".5"/><circle cx="40" cy="70" r="5" fill="{B}" opacity=".5"/>'],
+['Astro','Sun','#f59e0b',0,0,`<circle cx="50" cy="50" r="22" fill="{A}"/><path d="M50 6v14M50 80v14M6 50h14M80 50h14M19 19l10 10M71 71l10 10M81 19L71 29M29 71L19 81" ${ST} stroke-width="7"/>`],
+['Astro','Saturn',0,0,0,'<circle cx="50" cy="50" r="23" fill="{A}"/><ellipse cx="50" cy="52" rx="44" ry="11" fill="none" stroke="{B}" stroke-width="6" transform="rotate(-20 50 50)"/>'],
+['Astro','Sparkle',0,0,0,'<path d="M50 4Q54 46 96 50Q54 54 50 96Q46 54 4 50Q46 46 50 4z" fill="{A}"/>'],
+['Astro','Sparkles',0,0,0,'<path d="M40 14Q43 38 66 42Q43 46 40 70Q37 46 14 42Q37 38 40 14z" fill="{A}"/><path d="M76 50Q78 64 92 66Q78 68 76 82Q74 68 60 66Q74 64 76 50z" fill="{A}"/><path d="M70 8Q71 16 78 17Q71 18 70 26Q69 18 62 17Q69 16 70 8z" fill="{A}"/>'],
+['Astro','Comet',0,0,0,'<circle cx="74" cy="26" r="13" fill="{A}"/><path d="M64 36L8 92M72 42L28 96M62 30L4 70" stroke="{A}" stroke-width="5" stroke-linecap="round" opacity=".55"/>'],
+['Astro','Lotus','#e8559a','#f7a8cf',0,'<path d="M50 14C34 36 34 64 50 84C66 64 66 36 50 14z" fill="{A}"/><path d="M50 84C24 80 10 60 12 38C34 44 46 62 50 84z" fill="{B}"/><path d="M50 84C76 80 90 60 88 38C66 44 54 62 50 84z" fill="{B}"/><path d="M20 88h60" stroke="{A}" stroke-width="5" stroke-linecap="round"/>'],
+['Astro','Diya','#d9822b','#ffd24d',0,'<path d="M8 54h84c0 24-18 38-42 38S8 78 8 54z" fill="{A}"/><path d="M50 8c12 14 16 24 8 34-5 6-14 5-14-4 0-9 6-16 6-30z" fill="{B}"/>'],
+['Astro','Mandala',0,0,0,`<circle cx="50" cy="50" r="46" fill="none" stroke="{A}" stroke-width="2.5"/>${FL(12,6,22,26)}<circle cx="50" cy="50" r="10" fill="{A}"/>`],
+['Astro','Nazar','#1e63c4','#8fd0ff',0,'<circle cx="50" cy="50" r="44" fill="{A}"/><circle cx="50" cy="50" r="32" fill="#fff"/><circle cx="50" cy="50" r="21" fill="{B}"/><circle cx="50" cy="50" r="10" fill="#111"/>'],
+['Astro','Constellation',0,0,0,'<path d="M12 80L34 52L52 62L72 30L90 20M52 62L60 88" fill="none" stroke="{A}" stroke-width="2.5" opacity=".7"/><g fill="{A}"><circle cx="12" cy="80" r="5"/><circle cx="34" cy="52" r="6"/><circle cx="52" cy="62" r="5"/><circle cx="72" cy="30" r="7"/><circle cx="90" cy="20" r="5"/><circle cx="60" cy="88" r="4"/></g>'],
+['Arrows','Curved arrow',0,0,0,`<path d="M12 80C20 22 70 10 86 42" ${ST} stroke-width="6"/><path d="M68 38l19 6-4-19" ${ST} stroke-width="6"/>`],
+['Arrows','Dashed loop arrow',0,0,0,`<path d="M8 82C32 82 42 60 31 50C22 42 12 56 28 62C52 72 70 42 88 24" ${ST} stroke-width="3.5" stroke-dasharray="6 7"/><path d="M74 22l15 1-3 15" ${ST} stroke-width="4"/>`],
+['Arrows','Arrow right',0,0,0,`<path d="M8 50h80M64 24l26 26-26 26" ${ST} stroke-width="8"/>`],
+['Arrows','Double arrow',0,0,0,`<path d="M10 50h80M30 30L10 50l20 20M70 30l20 20-20 20" ${ST} stroke-width="7"/>`],
+['Arrows','Swipe chevrons',0,0,0,`<path d="M22 20l30 30-30 30M52 20l30 30-30 30" ${ST} stroke-width="9"/>`],
+['Arrows','Arrow down',0,0,0,`<path d="M50 8v80M26 64l24 26 24-26" ${ST} stroke-width="8"/>`],
+['Arrows','Squiggle',0,0,0,`<path d="M4 50q12-26 23 0t23 0t23 0t23 0" ${ST} stroke-width="6"/>`],
+['Arrows','Dotted line',0,0,0,'<path d="M8 50h84" stroke="{A}" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 12"/>'],
+['Arrows','Ornament divider',0,0,'0 0 200 40','<path d="M6 20h74M120 20h74" stroke="{A}" stroke-width="3" stroke-linecap="round"/><path d="M100 4l16 16-16 16-16-16z" fill="{A}"/><circle cx="86" cy="20" r="3" fill="{A}"/><circle cx="114" cy="20" r="3" fill="{A}"/>'],
+['Shapes','Arch',0,0,0,'<path d="M14 94V50a36 36 0 0 1 72 0v44z" fill="{A}"/>'],
+['Shapes','Blob',0,0,0,'<path d="M72 14C92 28 96 58 78 78 62 94 30 96 16 76 2 56 10 28 32 14c14-8 28-6 40 0z" fill="{A}"/>'],
+['Shapes','Ribbon',0,0,0,'<path d="M4 26h92l-14 24 14 24H4l14-24z" fill="{A}"/>'],
+['Shapes','Starburst',0,0,0,`<polygon points="${SB(14,48,38)}" fill="{A}"/>`],
+['Shapes','Seal badge',0,'#ffffff',0,`<polygon points="${SB(16,48,42)}" fill="{A}"/><circle cx="50" cy="50" r="30" fill="none" stroke="{B}" stroke-width="3"/>`],
+['Shapes','Hexagon',0,0,0,'<path d="M50 6l38 22v44L50 94 12 72V28z" fill="{A}"/>'],
+['Shapes','Speech bubble','#ffffff',0,0,'<path d="M12 14h76a6 6 0 0 1 6 6v46a6 6 0 0 1-6 6H44L26 90V72H12a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z" fill="{A}"/>'],
+['Shapes','Triangle',0,0,0,'<path d="M50 10L92 88H8z" fill="{A}"/>'],
+['Shapes','Ring',0,0,0,'<circle cx="50" cy="50" r="40" fill="none" stroke="{A}" stroke-width="10"/>'],
+['Decor','Corner flourish',0,0,0,'<path d="M10 92V34Q10 10 34 10h58" fill="none" stroke="{A}" stroke-width="5" stroke-linecap="round"/><circle cx="10" cy="92" r="5" fill="{A}"/><circle cx="92" cy="10" r="5" fill="{A}"/>'],
+['Decor','Brush stroke',0,0,0,'<path d="M6 58C30 34 60 68 94 38V62C64 90 34 54 6 80z" fill="{A}" opacity=".85"/>'],
+['Decor','Flower',0,'#ffd24d',0,`${FL(8,11,22,28)}<circle cx="50" cy="50" r="10" fill="{B}"/>`],
+['Decor','Leaf sprig','#2e8b57',0,0,'<path d="M50 94V12" stroke="{A}" stroke-width="4" stroke-linecap="round"/><g fill="{A}"><path d="M50 30C30 28 22 16 22 10c18 0 28 8 28 20z"/><path d="M50 30c20-2 28-14 28-20-18 0-28 8-28 20z"/><path d="M50 56C30 54 20 42 20 36c18 0 30 8 30 20z"/><path d="M50 56c20-2 30-14 30-20-18 0-30 8-30 20z"/></g>'],
+['Decor','Arch frame',0,0,0,'<path d="M14 94V50a36 36 0 0 1 72 0v44z" fill="none" stroke="{A}" stroke-width="5"/><path d="M24 94V52a26 26 0 0 1 52 0v42" fill="none" stroke="{B}" stroke-width="2.5"/>'],
+['Decor','Dots grid',0,0,0,'<g fill="{A}">'+[0,1,2,3].flatMap(i=>[0,1,2,3].map(j=>`<circle cx="${16+i*23}" cy="${16+j*23}" r="4"/>`)).join('')+'</g>']
+];
+const LIB={};L.forEach(([c,n,a,b,vb,s])=>LIB[n]={c,n,a:a||0,b:b||0,vb:vb||'0 0 100 100',s});
+const BG=[['Sunset','#ff9a5c','#c026d3'],['Midnight','#0f0c29','#302b63'],['Ocean','#2193b0','#6dd5ed'],['Forest','#11998e','#38ef7d'],['Gold','#f7971e','#ffd200'],['Rose','#ee9ca7','#ffdde1'],['Paper','#fdfbf7','#efe6d6'],['Royal','#4c1d95','#7c3aed'],['Charcoal','#000000','#434343'],['Fire','#d63a2f','#ff8a5c']];
+const svg=(G,el)=>`<svg viewBox="${G.vb}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">${G.s.replace(/\{A\}/g,el.c).replace(/\{B\}/g,el.c2)}</svg>`;
+const pe=paintEl;paintEl=function(n,el){pe(n,el);if(el.t==='gfx'){const G=LIB[el.g];n.innerHTML=G?svg(G,el):''}};
+const pnW=panel;panel=function(){pnW();const el=sel&&get(sel);if(el&&el.t==='gfx')$('props').insertAdjacentHTML('beforeend',`<h5>Graphic colours</h5><div class="g2"><label>Main<input type="color" data-k="c" value="${hex(el.c)}"></label><label>Detail<input type="color" data-k="c2" value="${hex(el.c2)}"></label></div>`)};
+const th=()=>TH[P[cur].th??cur],dim=G=>G.vb.split(' ').map(Number);
+const gE=(g,x,y,w,c,c2)=>{const G=LIB[g],[,,W,H]=dim(G);return E({t:'gfx',g,x,y,w,h:Math.round(w*H/W),c:c||G.a||th().p,c2:c2||G.b||'#ffffff'})};
+
+/* ---- ready-made template designs ---- */
+const mk=()=>{const X=[];return[X,o=>X.push(E({t:'rect',...o})),o=>X.push(E({t:'text',ff:FONTS[0],fs:24,color:'#222222',al:'l',lh:1.5,txt:'',...o})),(g,x,y,w,c,c2)=>X.push(gE(g,x,y,w,c,c2))]};
+const HD=txt=>txt({key:'hd',txt:'{{handle}}',x:110,y:1260,w:860,h:50,fs:26,b:1,al:'c',lh:1.2});
+const TP=[
+['Quote',(T,rect,txt,gx)=>{const p=T.p,d=T.d;rect({key:'bg',w:1080,h:1350,bg:mix(p,'#ffffff',.9)});rect({x:60,y:60,w:960,h:1230,r:50,bw:4,bc:p});gx('Sparkles',800,110,150,p);txt({txt:'“',x:90,y:110,w:300,h:300,fs:300,b:1,color:p,op:.35,lh:1});txt({key:'q',u:1,txt:'আপোনাৰ উদ্ধৃতি ইয়াত লিখক…',x:110,y:420,w:860,h:520,fs:64,b:1,color:d,al:'c',va:1,lh:1.4,fit:1});gx('Ornament divider',340,990,400,p);txt({key:'au',u:1,txt:'— নাম',x:110,y:1080,w:860,h:60,fs:38,b:1,color:p,al:'c'});HD(txt)}],
+['Tips list',(T,rect,txt,gx)=>{const p=T.p,d=T.d;rect({key:'bg',w:1080,h:1350,bg:mix(p,'#ffffff',.92)});rect({w:1080,h:270,bg:p,bg2:d,r:'0 0 60px 60px'});txt({key:'ti',u:1,txt:'আজিৰ ৪টা টিপছ',x:60,y:60,w:960,h:150,fs:84,b:1,color:'#ffffff',al:'c',va:1,lh:1.2,fit:1});[0,1,2,3].forEach(j=>{const y=320+j*230;rect({x:50,y,w:980,h:200,r:34,bg:'#ffffff',bw:2,bc:mix(p,'#ffffff',.7),sd:1});txt({txt:String(j+1),x:80,y:y+54,w:92,h:92,r:'50%',bg:p,fs:48,b:1,color:'#ffffff',al:'c',va:1,lh:1});txt({key:'r'+j,u:1,txt:'টিপ '+(j+1)+' ইয়াত লিখক',x:200,y:y+10,w:800,h:180,fs:36,color:'#2b2f38',va:1,lh:1.4,fit:1})});HD(txt)}],
+['Review',(T,rect,txt,gx)=>{const p=T.p,d=T.d,K='#0f0c1d';rect({key:'bg',w:1080,h:1350,bg:K,bg2:mix(d,K,.5)});txt({txt:'গ্ৰাহকৰ মতামত',x:60,y:90,w:960,h:130,fs:92,b:1,color:'#ffffff',al:'c',va:1,lh:1.2});[0,1,2,3,4].forEach(j=>gx('Star',270+j*100,250,90));gx('Speech bubble',60,400,960,'#ffffff');txt({key:'rv',u:1,txt:'গ্ৰাহকৰ মন্তব্য ইয়াত লিখক…',x:130,y:440,w:820,h:400,fs:44,color:'#2b2f38',va:1,lh:1.5,fit:1});rect({x:110,y:1000,w:130,h:130,r:'50%',bg:p,bg2:T.a});txt({key:'nm',u:1,txt:'গ্ৰাহকৰ নাম',x:270,y:1000,w:700,h:130,fs:48,b:1,color:T.g,va:1})}],
+['Panchang',(T,rect,txt,gx)=>{const p=T.p,d=T.d;rect({key:'bg',w:1080,h:1350,bg:'#fdf8ee',bg2:mix(p,'#fdf8ee',.85)});gx('Sun',70,50,150,'#f59e0b');gx('Crescent moon',860,50,150,p);txt({txt:'আজিৰ পঞ্চাঙ্গ',x:200,y:60,w:680,h:100,fs:70,b:1,color:d,al:'c',va:1,lh:1.2});txt({key:'week',txt:'{{week}}',x:300,y:165,w:480,h:50,fs:30,b:1,color:p,al:'c'});['তিথি','নক্ষত্ৰ','যোগ','কৰণ','সূৰ্যোদয়','সূৰ্যাস্ত','ৰাহুকাল'].forEach((h,j)=>{const y=270+j*140;rect({x:50,y,w:980,h:120,r:28,bg:j%2?'#ffffff':mix(p,'#ffffff',.85),bw:2,bc:mix(p,'#ffffff',.65)});txt({txt:h,x:80,y,w:360,h:120,fs:38,b:1,color:d,va:1});txt({key:'v'+j,u:1,txt:'—',x:450,y,w:550,h:120,fs:38,color:'#2b2f38',va:1,al:'r'})});HD(txt)}],
+['Lucky card',(T,rect,txt,gx,X)=>{const p=T.p,d=T.d;rect({key:'bg',w:1080,h:1350,bg:p,bg2:d});rect({x:40,y:330,w:1000,h:900,r:50,bg:'#ffffff'});X.push(E({t:'art',key:'art',u:1,ic:1,x:380,y:60,w:320,h:320,c1:T.a,c2:T.i2,gc:T.g,gl:'♈'}));txt({key:'rs',u:1,txt:'মেষ ৰাশি',x:60,y:400,w:960,h:100,fs:70,b:1,color:d,al:'c',va:1});[['শুভ সংখ্যা','৭'],['শুভ ৰং','ৰঙা'],['শুভ দিশ','পূব'],['শুভ দিন','মঙলবাৰ']].forEach(([h,v],j)=>{const y=540+j*160;rect({x:90,y,w:900,h:130,r:30,bg:mix(p,'#ffffff',.88)});txt({txt:h,x:120,y,w:380,h:130,fs:40,b:1,color:d,va:1});txt({key:'l'+j,u:1,txt:v,x:500,y,w:460,h:130,fs:46,b:1,color:p,va:1,al:'r'})})}],
+['Offer / CTA',(T,rect,txt,gx)=>{const p=T.p,d=T.d;rect({key:'bg',w:1080,h:1350,bg:p,bg2:d});rect({x:-200,y:900,w:700,h:700,r:'50%',bg:'#ffffff',op:.08});txt({key:'ti',u:1,txt:'বিশেষ অফাৰ',x:60,y:130,w:960,h:200,fs:140,b:1,color:'#ffffff',al:'c',va:1,lh:1.2,fit:1});txt({key:'su',u:1,txt:'আপোনাৰ বিৱৰণ ইয়াত লিখক',x:100,y:350,w:880,h:150,fs:48,color:T.g,al:'c',va:1,lh:1.4});gx('Chat call',380,560,320);gx('Curved arrow',700,470,160,'#ffffff');txt({txt:'হোৱাটছএপ কৰক {{phone}}',x:140,y:960,w:800,h:110,fs:48,b:1,color:d,bg:'#ffffff',r:55,al:'c',va:1,lh:1.2,fit:1})}],
+['Photo caption',(T,rect,txt,gx)=>{const p=T.p,d=T.d;rect({key:'bg',w:1080,h:1350,bg:mix(p,'#ffffff',.92)});rect({x:140,y:110,w:800,h:800,r:'400px 400px 40px 40px',bg:mix(p,'#ffffff',.65),bw:5,bc:p});txt({txt:'🖼\nইয়াত ফটো দিয়ক',x:140,y:110,w:800,h:800,fs:44,color:d,al:'c',va:1,op:.6});gx('Sparkles',820,70,140,p);txt({key:'cp',u:1,txt:'আপোনাৰ কেপশ্বন ইয়াত লিখক',x:100,y:960,w:880,h:220,fs:48,b:1,color:d,al:'c',va:1,lh:1.4,fit:1});HD(txt)}],
+['Festival',(T,rect,txt,gx)=>{const p=T.p,d=T.d,K='#14082e';rect({key:'bg',w:1080,h:1350,bg:K,bg2:mix(d,K,.4)});[[80,90,110],[860,150,90],[150,1050,80],[850,980,120]].forEach(([x,y,w])=>gx('Sparkles',x,y,w,T.g));txt({txt:'শুভেচ্ছা',x:60,y:130,w:960,h:130,fs:90,b:1,color:T.g,al:'c',va:1,lh:1.2});txt({key:'fest',u:1,txt:'ৰঙালী বিহু',x:40,y:280,w:1000,h:200,fs:130,b:1,color:'#ffffff',al:'c',va:1,lh:1.2,fit:1});gx('Diya',300,560,480,'#d9822b','#ffd24d');txt({key:'week',txt:'{{week}}',x:300,y:1130,w:480,h:60,fs:30,b:1,color:K,bg:T.g,r:30,al:'c',va:1});HD(txt)}],
+['Q & A',(T,rect,txt,gx)=>{const p=T.p,d=T.d;rect({key:'bg',w:1080,h:1350,bg:mix(p,'#ffffff',.92)});[['প্ৰ',p,120,'q','আপোনাৰ প্ৰশ্ন ইয়াত লিখক?'],['উ',d,700,'a','উত্তৰ ইয়াত লিখক…']].forEach(([l,c,y,k,t])=>{rect({x:50,y,w:980,h:500,r:44,bg:'#ffffff',bw:4,bc:c,sd:1});txt({txt:l,x:80,y:y+30,w:110,h:110,r:'50%',bg:c,fs:56,b:1,color:'#ffffff',al:'c',va:1,lh:1});txt({key:k,u:1,txt:t,x:220,y:y+30,w:780,h:440,fs:42,b:k=='q'?1:0,color:'#2b2f38',va:1,lh:1.5,fit:1})});HD(txt)}]
+];
+const build=([n,f],T)=>{const[X,rect,txt,gx]=mk();f(T,rect,txt,gx,X);return X};
+
+/* ---- drawer UI ---- */
+const css=document.createElement('style');css.textContent='.main{position:relative}.tools{overflow:auto}#drw{position:absolute;left:78px;top:0;bottom:0;width:340px;background:var(--sf);border-right:1px solid var(--bd);z-index:6;display:none;flex-direction:column;box-shadow:6px 0 24px rgba(0,0,0,.18)}#drw .dh{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;font-size:16px}#drw input{margin:0 14px 8px;padding:9px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);color:var(--tx);font:inherit}#drw .dt{display:flex;gap:6px;padding:0 14px 8px;overflow-x:auto}#drw .dt button{flex:0 0 auto;border-radius:99px;padding:4px 12px;font-size:12px}#drw .dt button.on{background:var(--ac);color:#fff;border-color:var(--ac)}#drw .dg{flex:1;overflow:auto;padding:4px 14px 14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-content:start}#drw .dg.t{grid-template-columns:repeat(2,1fr)}#drw .gc{aspect-ratio:1;border-radius:12px;background:var(--bg);padding:8px;cursor:pointer;border:1px solid var(--bd)}#drw .gc:hover{border-color:var(--ac)}#drw .dn{padding:0 14px 8px;font-size:12px;color:var(--mu)}#drw .th .lb{font-size:11px}@media(max-width:900px){#drw{position:fixed;left:0;right:0;top:auto;bottom:0;width:auto;height:62vh}}';document.head.appendChild(css);
+const D=document.createElement('div');D.id='drw';document.querySelector('.main').appendChild(D);
+const CATS=['All','Icons','Astro','Arrows','Shapes','Decor','Backgrounds'];let mode='el',tab='All',q='';
+function shell(){D.style.display='flex';D.innerHTML=`<div class="dh"><b>${mode==='tp'?'Templates':'Elements'}</b><button id="dx">✕</button></div>`+(mode==='tp'?'<div class="dn">Click a design to add it as a new slide (placeholders are editable).</div><div class="dg t"></div>':`<input id="dq" placeholder="Search elements" value="${esc(q)}"><div class="dt">${CATS.map(c=>`<button class="${c===tab?'on':''}">${c}</button>`).join('')}</div><div class="dg"></div>`);
+ D.querySelector('#dx').onclick=()=>D.style.display='none';
+ if(mode==='el'){D.querySelector('#dq').oninput=e=>{q=e.target.value;fill()};D.querySelectorAll('.dt button').forEach(b=>b.onclick=()=>{tab=b.textContent;shell()})}
+ fill()}
+function fill(){const g=D.querySelector('.dg');g.innerHTML='';
+ if(mode==='tp'){const T=th();TP.forEach(t=>{const d=document.createElement('div');d.className='th';d.innerHTML='<div class="c2"></div><span class="lb">'+t[0]+'</span>';const c=d.firstChild;c.style.background=mix(T.p,'#ffffff',.94);g.appendChild(d);build(t,T).forEach(el=>{const n=document.createElement('div');n.className='el';c.appendChild(n);paintEl(n,el)});c.style.transform=`scale(${d.clientWidth/1080})`;
+  d.onclick=()=>{const T2=th();RS.ins({bg:mix(T2.p,'#ffffff',.94),th:P[cur].th??cur,els:build(t,T2),cap:'✨\n{{handle}}\n\n#assam'})}});return}
+ const s=q.trim().toLowerCase();
+ if(tab==='Backgrounds'||tab==='All')BG.filter(b=>b[0].toLowerCase().includes(s)).forEach(([n,a,b])=>{const d=document.createElement('div');d.className='gc';d.title=n+' background';d.style.background=`linear-gradient(120deg,${a},${b})`;d.onclick=()=>{const e=P[cur].els.find(x=>x.key==='bg'||x.key==='bgx');if(e){e.bg=a;e.bg2=b}else P[cur].els.unshift(E({t:'rect',key:'bgx',w:1080,h:1350,bg:a,bg2:b}));render();commit()};g.appendChild(d)});
+ if(tab!=='Backgrounds')L.filter(l=>(tab==='All'||l[0]===tab)&&l[1].toLowerCase().includes(s)).forEach(l=>{const G=LIB[l[1]],d=document.createElement('div');d.className='gc';d.title=l[1];d.innerHTML=svg(G,{c:G.a||th().p,c2:G.b||'#ffffff'});
+  d.onclick=()=>{const e=gE(l[1],400,520,260);e.x=Math.round((1080-e.w)/2);e.y=Math.round((1350-e.h)/2);P[cur].els.push(e);sel=e.id;render();commit()};g.appendChild(d)})}
+const nav=document.querySelector('.tools');
+[['aTp','▦','Templates','tp'],['aEl','❖','Elements','el']].reverse().forEach(([id,ic,t,m])=>{const b=document.createElement('button');b.id=id;b.innerHTML=`<i>${ic}</i>${t}`;b.onclick=()=>{if(D.style.display==='flex'&&mode===m){D.style.display='none';return}mode=m;shell()};nav.prepend(b)});
+})();
