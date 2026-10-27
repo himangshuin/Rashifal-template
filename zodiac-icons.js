@@ -1,6 +1,7 @@
 /* Original illustrated zodiac badges (line-art style). window.ICON(el) -> svg string */
 window.ICON=function(el){
- const S='#2a2a33',A=el.c1||'#e07a3f',B=el.c2||'#3a8f8a',Z='♈♉♊♋♌♍♎♏♐♑♒♓',k=Math.max(0,Z.indexOf(String(el.gl||'')[0])),
+ const Z='♈♉♊♋♌♍♎♏♐♑♒♓',k=Math.max(0,Z.indexOf(String(el.gl||'')[0]));
+ const ic=(S,A,B)=>{const
  P=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||S}" stroke-width="${o.w||4}" stroke-linecap="round" stroke-linejoin="round"/>`,
  C=(x,y,r,f)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f||'#fff'}" stroke="${S}" stroke-width="3.5"/>`,
  D=(x,y)=>`<circle cx="${x}" cy="${y}" r="3.5" fill="${S}"/>`,
@@ -20,5 +21,10 @@ window.ICON=function(el){
   P('M92 78h56l8 24Q164 148 120 168Q76 148 84 102Z',{f:B})+P('M88 78h64',{w:6})+P('M86 118l11 8 11-8 11 8 11-8 11 8 11-8',{s:'#fff'})+P('M156 100Q186 104 176 130',{s:A,w:6}),
   fish+`<g transform="rotate(180 120 120)">${fish}</g>`
  ];
- const sp=[[44,76],[196,70],[58,186],[190,176],[120,30],[120,212]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.4" fill="${S}" opacity=".45"/>`).join('');
- return `<svg viewBox="0 0 240 240" width="${el.w}" height="${el.h}"><circle cx="120" cy="120" r="116" fill="#fff" stroke="${S}" stroke-width="3"/><circle cx="120" cy="120" r="98" fill="#e8e0d2"/>${sp}${I[k]}</svg>`};
+ return I[k]};
+ const sp=[[44,76],[196,70],[58,186],[190,176],[120,30],[120,212]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.4" fill="#2a2a33" opacity=".45"/>`).join('');
+ const st=+el.ic||1,c1=el.c1||'#e07a3f',c2=el.c2||'#3a8f8a',H=`<svg viewBox="0 0 240 240" width="${el.w}" height="${el.h}">`;
+ if(st===2){const bg=mix(c1,c2,.45),sh=mix(c1,c2,.85),id='cp'+el.id;let s='';for(let q=16;q>=1;q--)s+=`<g transform="translate(${q*3} ${q*3})">${ic(sh,sh,sh).replace(/#fff/g,sh)}</g>`;
+  return H+`<defs><clipPath id="${id}"><circle cx="120" cy="120" r="116"/></clipPath></defs><circle cx="120" cy="120" r="116" fill="${bg}"/><g clip-path="url(#${id})">${s}</g>${ic(bg,'#fff','#fff')}</svg>`}
+ if(st===3)return H+`<circle cx="120" cy="120" r="116" fill="#fff"/><circle cx="112" cy="128" r="86" fill="#ffd400"/>${sp}${ic('#16407e','#4aa3e0','#9fd2f5')}</svg>`;
+ return H+`<circle cx="120" cy="120" r="116" fill="#fff" stroke="#2a2a33" stroke-width="3"/><circle cx="120" cy="120" r="98" fill="#e8e0d2"/>${sp}${ic('#2a2a33',c1,c2)}</svg>`};
