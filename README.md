@@ -1,10 +1,10 @@
-# What's new — Canva-style upgrade
+# What's new — Studio editor upgrade
 
-**Upload ALL files in this folder to your repo root (replace the old ones).** New files: `canva-addon.js`, `graphics-pack.js`, `tpl-pack.js`.
+**Upload ALL files in this folder to your repo root (replace the old ones).** New files: `editor-addon.js`, `graphics-pack.js`, `tpl-pack.js`, `tpl-pack2.js`.
 
-## New left rail (like Canva)
-- **Templates** – search, category chips (Astro, Review, Promo, Guide…), pick a colour theme, hover a card for *Add* / *Replace*. 14 new designs (daily tarot, stacked reviews, phone reviews, service card, free guide, moon & tithi, lucky number, mantra, consultation booking, do & don't, this-or-that, love match, announcement…).
-- **Elements** – section rows with *See all* (just like Canva's 3D panel), search, recently-used, drag & drop onto the canvas. **~110 new graphics**: 3D stickers, emoji characters, tarot/astro art, Assam & festival (japi, gamosa border, dhol, tea, rangoli, marigold garland…), frames, 13 full-page patterns, doodles, social badges.
+## New left rail
+- **Templates** – search, category chips (Astro, Review, Promo, Guide…), pick a colour theme, hover a card for *Add* / *Replace*. 32 new designs (daily tarot, stacked reviews, phone reviews, service card, free guide, moon & tithi, lucky number, mantra, consultation booking, do & don't, this-or-that, love match, announcement, dark showcase, mood board, bold doodle title, happy birthday, search-bar post, sun quote, save-the-date calendar, blue hook, photo collage, event launch, auspicious timings, maroon services, scrapbook, gradient quote, huge title, minimal journal, folder contents…).
+- **Elements** – section rows with *See all*, search, recently-used, drag & drop onto the canvas. **~110 new graphics**: 3D stickers, emoji characters, tarot/astro art, Assam & festival (japi, gamosa border, dhol, tea, rangoli, marigold garland…), frames, 13 full-page patterns, doodles, social badges.
 - **Text** – heading/subheading/body, 14 ready-made text styles, font browser (+8 new Latin fonts).
 - **Uploads** – your images, drag/drop or Ctrl+V paste.
 - **Background** – colours, gradients, patterns, photo background, "apply to all slides".
