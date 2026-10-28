@@ -93,7 +93,7 @@ const capFor=i=>{if(SET==='weekly')return;if(SET==='carousel')return '✨\n{{han
  return i?`${r[0]} ৰাশিৰ ওপৰত ${w}ৰ প্ৰভাৱ ✨\n{{week}}\n\n#ৰাশিফল #${r[1]} #${SET} #assam`:`${w} — ১২ ৰাশিৰ ফল ✨\n{{week}}\n\nSwipe কৰি আপোনাৰ ৰাশি চাওক 👉\n#ৰাশিফল #${SET} #assam`};
 function loadSet(){R.length=0;R.push(...LB(SET));let d=null;try{d=JSON.parse(localStorage.getItem(sk(SET))||'null')}catch(e){}
  if(d&&d.P&&d.RL&&d.RL.length===d.P.length){R.length=0;R.push(...d.RL)}
- if(d&&d.P&&d.P.length===R.length){P=d.P;Object.assign(IMG,d.IMG||{})}
+ if(d&&d.P&&d.P.length===R.length){P=d.P;Object.assign(IMG,d.IMG||{});EX.h=(d.EX&&d.EX.h)||1350;fitV()}
  else P=R.map((_,i)=>{const th=SET==='carousel'?8:i;return{bg:pageBg(th),th,els:tpl(i,th),cap:capFor(i)}});
  uid=Math.max(1,...P.flatMap(p=>p.els.map(e=>e.id)))+1;iid=Math.max(0,...Object.keys(IMG).map(k=>+k.slice(1)));
  CAN=R.length;cur=0;sel=null;H=[];hi=-1;render();fitV();commit()}
@@ -105,9 +105,9 @@ ss.onchange=()=>{persist();SET=ss.value;try{localStorage.setItem('rashi_set',SET
 
 /* ---------- add / duplicate / delete slides ---------- */
 function renum(){CAN=P.length;P.forEach((pg,i)=>{const nm=pg.els.find(e=>e.key==='num');if(nm)nm.txt=String(i).padStart(2,'0');
- const dt=pg.els.filter(e=>/^dt\d+$/.test(e.key));if(dt.length){pg.els=pg.els.filter(e=>!dt.includes(e));const c=TH[pg.th??8].p;for(let k=0;k<P.length;k++)pg.els.push(E({t:'rect',key:'dt'+k,x:70+k*38,y:1250,w:26,h:8,r:4,bg:k===i?c:mix(c,'#ffffff',.65)}))}})}
+ const dt=pg.els.filter(e=>/^dt\d+$/.test(e.key));if(dt.length){const y0=dt[0].y;pg.els=pg.els.filter(e=>!dt.includes(e));const c=TH[pg.th??8].p;for(let k=0;k<P.length;k++)pg.els.push(E({t:'rect',key:'dt'+k,x:70+k*38,y:y0,w:26,h:8,r:4,bg:k===i?c:mix(c,'#ffffff',.65)}))}})}
 const done=()=>{sel=null;renum();render();commit()};
-function addS(){const th=P[cur].th??cur,n=cur+1;CAN=P.length+1;const els=CA(1,th);els.find(e=>e.key==='num').txt=String(n).padStart(2,'0');
+function addS(){const th=P[cur].th??cur,n=cur+1;CAN=P.length+1;const els=window.ADAPT?ADAPT(CA(1,th)):CA(1,th);els.find(e=>e.key==='num').txt=String(n).padStart(2,'0');
  P.splice(n,0,{bg:pageBg(th),th,els,cap:'✨\n{{handle}}\n\n#assam'});R.splice(n,0,['ছ্লাইড '+(n+1),'Slide '+(n+1),'＋','slide']);cur=n;done()}
 function dupS(){const c=JSON.parse(JSON.stringify(P[cur]));c.els.forEach(e=>e.id=uid++);P.splice(cur+1,0,c);R.splice(cur+1,0,R[cur].slice());cur++;done()}
 function delS(){if(P.length<2||!confirm('Delete this slide?'))return;P.splice(cur,1);R.splice(cur,1);cur=Math.min(cur,P.length-1);done()}

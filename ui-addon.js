@@ -13,9 +13,9 @@ header{padding:8px 14px;gap:6px}header button,header select{border-radius:9px;pa
 .xp{position:relative}.xm{position:absolute;right:0;top:115%;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:6px;display:none;flex-direction:column;gap:2px;min-width:200px;box-shadow:0 12px 32px rgba(0,0,0,.28);z-index:20}.xm.o{display:flex}
 .xm button{background:none!important;color:var(--tx)!important;text-align:left;border:0!important;padding:9px 12px!important;font-weight:500!important}.xm button:hover{background:var(--bg)!important}
 .chips{align-items:center;padding:8px 14px;gap:10px;background:var(--sf)}
-.chips button.tb{flex:0 0 auto;position:relative;display:block;width:76px;height:96px;padding:0;border-radius:10px;overflow:hidden;border:2px solid var(--bd);background:#fff!important}
+.chips button.tb{flex:0 0 auto;position:relative;display:block;width:76px;height:min(calc(76px*var(--phn,1350)/1080),150px);padding:0;border-radius:10px;overflow:hidden;border:2px solid var(--bd);background:#fff!important}
 .chips button.tb.on{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,58,237,.28)}
-.chips .tb .c3{position:absolute;left:0;top:0;width:1080px;height:1350px;transform:scale(.0704);transform-origin:0 0;pointer-events:none}
+.chips .tb .c3{position:absolute;left:0;top:0;width:1080px;height:var(--ph,1350px);transform:scale(.0704);transform-origin:0 0;pointer-events:none}
 .chips .tb .nn{position:absolute;left:4px;bottom:3px;background:rgba(0,0,0,.65);color:#fff;font-size:10px;padding:0 6px;border-radius:99px}
 .chips button.tb.d::after{content:"✓";position:absolute;right:4px;top:3px;font-size:10px;color:#fff;background:#22a06b;border-radius:50%;width:16px;height:16px;display:grid;place-items:center}
 .chips button.ab{flex:0 0 auto;height:96px;width:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;border:2px dashed var(--bd);border-radius:10px;padding:0;background:none}
@@ -30,7 +30,7 @@ const tg=document.createElement('button'),hp=document.createElement('button');tg
 const setT=t=>{document.documentElement.dataset.theme=t;tg.textContent=t==='dark'?'☀':'🌙';try{localStorage.setItem('rashi_theme',t)}catch(e){}};
 let t0=null;try{t0=localStorage.getItem('rashi_theme')}catch(e){}setT(t0||((window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light'));
 tg.onclick=()=>setT(document.documentElement.dataset.theme==='dark'?'light':'dark');
-hp.onclick=()=>modal('<h3 style="margin:0 0 12px">Keyboard shortcuts</h3><div class="kb">'+[['Double-click text','Edit text'],['Ctrl + C / V','Copy / paste element'],['Ctrl + Z / Y','Undo / redo'],['Arrow keys (Shift = 10px)','Nudge selected'],['Delete','Delete selected'],['Alt while dragging','Disable snapping'],['PageUp / PageDown','Previous / next slide']].map(([k,v])=>`<kbd>${k}</kbd><span>${v}</span>`).join('')+'</div>');
+hp.onclick=()=>modal('<h3 style="margin:0 0 12px">Keyboard shortcuts</h3><div class="kb">'+[['Double-click text','Edit text'],['Ctrl + C / V','Copy / paste element'],['Ctrl + Z / Y','Undo / redo'],['Arrow keys (Shift = 10px)','Nudge selected'],['Delete','Delete selected'],['Alt while dragging','Disable snapping'],['PageUp / PageDown','Previous / next slide'],['Ctrl + D','Duplicate selected'],['Ctrl + ] / [','Bring forward / send back'],['Ctrl + scroll','Zoom canvas'],['Right-click','Context menu'],['Shift while rotating','Snap to 15°'],['Ctrl + V (image)','Paste image from clipboard'],['Drag a file in','Upload image']].map(([k,v])=>`<kbd>${k}</kbd><span>${v}</span>`).join('')+'</div>');
 const xp=document.createElement('div');xp.className='xp';const xb=document.createElement('button');xb.className='pr';xb.textContent='⬇ Export ▾';const xm=document.createElement('div');xm.className='xm';
 [['b1','Current slide (PNG / JPG)'],['b2','All slides (ZIP + captions)'],['b3','All slides (PDF)']].forEach(([id,t])=>{const b=$(id);b.textContent=t;b.classList.remove('pr');xm.appendChild(b);b.addEventListener('click',()=>xm.classList.remove('o'))});
 xp.append(xb,xm);xb.onclick=e=>{e.stopPropagation();xm.classList.toggle('o')};document.addEventListener('click',()=>xm.classList.remove('o'));
@@ -65,11 +65,19 @@ C.addEventListener('click',e=>{const b=e.target.closest('[data-a]'),el=sel&&get(
 const rfW=refresh;refresh=function(el){rfW(el);ctxUpd()};
 
 /* right panel tabs: Element / Page */
-let PT='el';const pn2=panel,sW=select;
+let PT='el';window.setPT=v=>{PT=v;panel()};const pn2=panel,sW=select;
 select=function(id){if(id)PT='el';sW(id)};
-panel=function(){const s=sel,el=s&&get(s),pg=!el||PT==='pg';if(pg){sel=null;pn2();sel=s}else pn2();
- $('props').insertAdjacentHTML('afterbegin',`<div class="pt"><button data-pt="el" class="${pg?'':'on'}" ${el?'':'disabled'}>Element</button><button data-pt="pg" class="${pg?'on':''}">Page &amp; export</button></div>`);ctxUpd()};
-$('props').addEventListener('click',e=>{const b=e.target.closest('[data-pt]');if(b&&!b.disabled){PT=b.dataset.pt;panel()}});
+const lyHTML=()=>`<div class="ly">${[...P[cur].els].reverse().map(e=>`<div class="lr${e.id===sel?' on':''}" data-ly="${e.id}"><span class="li">${e.t==='text'?'T':e.t==='img'?'🖼':e.t==='gfx'?'✦':e.t==='art'?'♈':'▭'}</span><span class="ln">${esc(e.t==='text'?(e.txt||'').replace(/\n/g,' ').slice(0,24)||'Text':(e.g||e.key||(e.t==='img'?'Image':'Shape')))}</span><button data-lyh="${e.id}" title="Show / hide">${e.hd?'🚫':'👁'}</button><button data-lyl="${e.id}" title="Lock">${e.lk?'🔒':'🔓'}</button><button data-lyu="${e.id}" title="Forward">↑</button><button data-lyd="${e.id}" title="Back">↓</button></div>`).join('')}</div>`;
+panel=function(){const s=sel,el=s&&get(s),ly=PT==='ly',pg=!ly&&(!el||PT==='pg');if(ly)$('props').innerHTML='';else if(pg){sel=null;pn2();sel=s}else pn2();
+ $('props').insertAdjacentHTML('afterbegin',`<div class="pt"><button data-pt="el" class="${pg||ly?'':'on'}" ${el?'':'disabled'}>Element</button><button data-pt="ly" class="${ly?'on':''}">Layers</button><button data-pt="pg" class="${pg?'on':''}">Page</button></div>`);
+ if(ly)$('props').insertAdjacentHTML('beforeend',lyHTML());ctxUpd()};
+$('props').addEventListener('click',e=>{const t=e.target,b=t.closest('[data-pt]');if(b&&!b.disabled){PT=b.dataset.pt;panel();return}
+ const A=P[cur].els,g=k=>A.find(x=>x.id===+t.dataset[k]);
+ if(t.dataset.lyh){const x=g('lyh');x.hd=x.hd?0:1;render();commit();return}
+ if(t.dataset.lyl){const x=g('lyl');x.lk=x.lk?0:1;panel();commit();return}
+ if(t.dataset.lyu){const x=g('lyu'),i=A.indexOf(x);if(i<A.length-1){A.splice(i,2,A[i+1],x);render();commit()}return}
+ if(t.dataset.lyd){const x=g('lyd'),i=A.indexOf(x);if(i>0){A.splice(i-1,2,x,A[i-1]);render();commit()}return}
+ const r=t.closest('[data-ly]');if(r&&!t.closest('button')){sel=+r.dataset.ly;updSel();panel()}});
 
 /* slide thumbnails strip + navigation */
 const zb=document.querySelector('.zb'),pv=document.createElement('button'),nx=document.createElement('button'),sn=document.createElement('span');sn.id='sn';pv.textContent='‹';nx.textContent='›';pv.title='Previous slide';nx.title='Next slide';zb.prepend(pv,sn,nx);

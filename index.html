@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rashifal Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;800&family=Hind+Siliguri:wght@400;700&family=Baloo+Da+2:wght@400;800&family=Noto+Serif+Bengali:wght@400;800&family=Anek+Bangla:wght@400;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;800&family=Hind+Siliguri:wght@400;700&family=Baloo+Da+2:wght@400;800&family=Noto+Serif+Bengali:wght@400;800&family=Anek+Bangla:wght@400;800&family=Poppins:wght@400;800&family=Montserrat:wght@400;800&family=Playfair+Display:wght@400;800&family=Cinzel:wght@400;800&family=Bebas+Neue&family=Pacifico&family=Dancing+Script:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#eeebf5;--sf:#fff;--tx:#1f1a29;--mu:#7d7688;--bd:#e4dfec;--ac:#7c3aed;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15131a;--sf:#221f2a;--tx:#f0ecf6;--mu:#9d95a8;--bd:#383242}}
@@ -28,7 +28,7 @@ button:disabled{opacity:.5}
 .tools button:hover{background:var(--ac);color:#fff}.tools i{font-style:normal;font-size:20px}
 .area{overflow:auto;display:flex;padding:14px;background:radial-gradient(rgba(124,58,237,.18) 1px,transparent 1.2px) 0 0/18px 18px,var(--bg);touch-action:pan-x pan-y}
 #wrap{position:relative;flex:0 0 auto;margin:auto}
-#stage{position:absolute;left:0;top:0;width:1080px;height:1350px;transform-origin:0 0}
+#stage{position:absolute;left:0;top:0;width:1080px;height:var(--ph,1350px);transform-origin:0 0}
 #cv{position:absolute;inset:0;overflow:hidden;background:#fff;box-shadow:0 10px 50px rgba(40,20,80,.35)}
 .el{position:absolute;box-sizing:border-box;overflow:hidden;touch-action:none;cursor:move;user-select:none}
 .el img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
@@ -63,8 +63,8 @@ aside .ck{display:flex;gap:7px;align-items:center;color:var(--tx);font-size:13px
 #md textarea{width:100%;min-height:300px;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;line-height:1.5}
 #md code{background:var(--bg);padding:1px 5px;border-radius:5px}
 .ovg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
-.th{position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.25);transition:.15s}.th:hover{transform:translateY(-3px)}
-.th .c2{position:absolute;left:0;top:0;width:1080px;height:1350px;transform-origin:0 0}.th .el{pointer-events:none}
+.th{position:relative;aspect-ratio:1080/var(--phn,1350);border-radius:10px;overflow:hidden;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.25);transition:.15s}.th:hover{transform:translateY(-3px)}
+.th .c2{position:absolute;left:0;top:0;width:1080px;height:var(--ph,1350px);transform-origin:0 0}.th .el{pointer-events:none}
 .th .lb{position:absolute;left:8px;bottom:6px;background:rgba(0,0,0,.65);color:#fff;padding:2px 9px;border-radius:99px;font-size:12px}
 @media(max-width:900px){body{height:auto;min-height:100dvh}.main{grid-template-columns:1fr}.tools{flex-direction:row;border-right:0;border-bottom:1px solid var(--bd)}.tools button{flex:1}.area{height:64vh}aside{border-left:0}}
 </style>
@@ -85,12 +85,12 @@ aside .ck{display:flex;gap:7px;align-items:center;color:var(--tx);font-size:13px
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 const R=[["মেষ","Aries","♈","aries"],["বৃষ","Taurus","♉","taurus"],["মিথুন","Gemini","♊","gemini"],["কৰ্কট","Cancer","♋","cancer"],["সিংহ","Leo","♌","leo"],["কন্যা","Virgo","♍","virgo"],["তুলা","Libra","♎","libra"],["বৃশ্চিক","Scorpio","♏","scorpio"],["ধনু","Sagittarius","♐","sagittarius"],["মকৰ","Capricorn","♑","capricorn"],["কুম্ভ","Aquarius","♒","aquarius"],["মীন","Pisces","♓","pisces"]];
-const FONTS=["Noto Serif Bengali","Noto Sans Bengali","Hind Siliguri","Baloo Da 2","Anek Bangla","Arial"];
+const FONTS=["Noto Serif Bengali","Noto Sans Bengali","Hind Siliguri","Baloo Da 2","Anek Bangla","Poppins","Montserrat","Playfair Display","Cinzel","Bebas Neue","Pacifico","Dancing Script","Lobster","Arial"];
 const OL='4px 0 #fff,-4px 0 #fff,0 4px #fff,0 -4px #fff,3px 3px #fff,-3px -3px #fff,3px -3px #fff,-3px 3px #fff,7px 10px 0 rgba(0,0,0,.28)';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let uid=1,iid=0,IMG={},P=[],cur=0,sel=null,H=[],hi=-1,drag=null,scale=1,tm;
 const E=o=>({id:uid++,t:'rect',x:0,y:0,w:100,h:100,op:1,...o});
-const V={week:'',phone:'6901529861',handle:''},EX={fmt:'png',scale:1};let CB=null,zm=0;
+const V={week:'',phone:'6901529861',handle:''},EX={fmt:'png',scale:1,h:1350};let CB=null,zm=0;
 const tok=t=>String(t??'').replace(/\{\{(\w+)\}\}/g,(m,k)=>V[k]??m);
 const capDef=i=>`${R[i][0]} ৰাশিৰ সাপ্তাহিক ৰাশিফল ✨\n{{week}}\n\n#ৰাশিফল #${R[i][1]} #horoscope #weeklyhoroscope #assam`;
 const weekEl=d=>E({t:'text',key:'week',ff:FONTS[0],txt:'{{week}}',x:290,y:234,w:500,h:46,fs:24,b:1,color:d,al:'c',lh:1.2});
@@ -170,7 +170,7 @@ function pagePanel(){const th=P[cur].th??cur,o=(v,t,c)=>`<option value="${v}" ${
  <h5>Instagram caption</h5><textarea data-cap style="min-height:110px">${esc(P[cur].cap??capDef(cur))}</textarea><div class="bar"><button id="cpc">Copy caption</button></div>
  <h5>Page</h5><label>Background</label><input type="color" data-pg="bg" value="${hex(P[cur].bg)}">
  <h5>Colour theme</h5><select id="thm">${R.map((r,j)=>`<option value="${j}" ${j===th?'selected':''}>${r[2]}&#xFE0E; ${r[0]} · ${r[1]}</option>`).join('')}</select><div class="bar"><button id="thp">This page</button><button id="tha" class="pri">All 12 pages</button></div><div class="bar"><button id="rst">Reset this page design</button></div>
- <h5>Export</h5><div class="g2"><label>Format<select data-x="fmt">${o('png','PNG',EX.fmt)}${o('jpeg','JPG (smaller)',EX.fmt)}</select></label><label>Size<select data-x="scale">${o(1,'1080×1350',EX.scale)}${o(2,'2160×2700 (2×)',EX.scale)}</select></label></div>`}
+ <h5>Export</h5><div class="g2"><label>Format<select data-x="fmt">${o('png','PNG',EX.fmt)}${o('jpeg','JPG (smaller)',EX.fmt)}</select></label><label>Size<select data-x="scale">${o(1,'1080×'+EX.h,EX.scale)}${o(2,'2160×'+EX.h*2+' (2×)',EX.scale)}</select></label></div>`}
 function panel(){const el=sel&&get(sel),p=$('props');
  let h=`<label>Select any element (layers)</label><select id="lay"><option value="">— choose —</option>${[...P[cur].els].reverse().map(e=>`<option value="${e.id}" ${e.id===sel?'selected':''}>${e.t==='text'?'T  '+esc((e.txt||'').replace(/\n/g,' ').slice(0,20)):e.t==='img'?'🖼 image':'▭ shape'}${e.key?' · '+e.key:''}</option>`).join('')}</select>`;
  if(!el){p.innerHTML=h+pagePanel();return}
@@ -196,7 +196,7 @@ $('props').addEventListener('input',e=>{const t=e.target;
  refresh(el);if(k==='u'||k==='fit'||k==='va'||k==='b'||k==='ol'||k==='sd')panel()});
 $('props').addEventListener('click',e=>{const t=e.target,el=sel&&get(sel),A=P[cur].els;
  if(t.id==='cpc'){const x=tok(P[cur].cap??capDef(cur)),ok=()=>$('st').textContent='Caption copied.';(navigator.clipboard?navigator.clipboard.writeText(x):Promise.reject()).then(ok).catch(()=>{const a=document.createElement('textarea');a.value=x;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();ok()});return}
- if(t.dataset.al&&el){const k=t.dataset.al;if(k==='l')el.x=0;if(k==='c')el.x=Math.round((1080-el.w)/2);if(k==='r')el.x=1080-el.w;if(k==='t')el.y=0;if(k==='m')el.y=Math.round((1350-el.h)/2);if(k==='b')el.y=1350-el.h;refresh(el);return}
+ if(t.dataset.al&&el){const k=t.dataset.al;if(k==='l')el.x=0;if(k==='c')el.x=Math.round((1080-el.w)/2);if(k==='r')el.x=1080-el.w;if(k==='t')el.y=0;if(k==='m')el.y=Math.round((EX.h-el.h)/2);if(k==='b')el.y=EX.h-el.h;refresh(el);return}
  if(t.dataset.clr&&el){delete el[t.dataset.clr];refresh(el);panel();return}
  if(t.id==='rst'){if(!confirm('Reset this page design? Your rashi text is kept.'))return;rebuild(cur,cur);sel=null;render();commit();return}
  if(t.id==='thp'||t.id==='tha'){const ti=+$('thm').value;if(t.id==='tha'&&!confirm('Apply this theme to all 12 pages?'))return;(t.id==='tha'?P.map((_,j)=>j):[cur]).forEach(j=>rebuild(j,ti));sel=null;render();commit();return}
@@ -215,18 +215,22 @@ $('area').addEventListener('pointerdown',e=>{if(e.target.isContentEditable)retur
  else select(null);
  if(drag)e.preventDefault()});
 const refreshNow=el=>{const n=node(el.id);if(n)paintEl(n,el);updSel()};
-function snapTo(el,nx,ny){const XS=[0,540,1080],YS=[0,675,1350];P[cur].els.forEach(q=>{if(q===el||q.hd)return;XS.push(q.x,q.x+q.w/2,q.x+q.w);YS.push(q.y,q.y+q.h/2,q.y+q.h)});
+function snapTo(el,nx,ny){const XS=[0,540,1080],YS=[0,EX.h/2,EX.h];P[cur].els.forEach(q=>{if(q===el||q.hd)return;XS.push(q.x,q.x+q.w/2,q.x+q.w);YS.push(q.y,q.y+q.h/2,q.y+q.h)});
  let bx=8,by=8,sx=null,sy=null,g='';
  [0,el.w/2,el.w].forEach(o=>XS.forEach(c=>{const d=c-(nx+o);if(Math.abs(d)<bx){bx=Math.abs(d);sx=[d,c]}}));
  [0,el.h/2,el.h].forEach(o=>YS.forEach(c=>{const d=c-(ny+o);if(Math.abs(d)<by){by=Math.abs(d);sy=[d,c]}}));
- if(sx){nx+=sx[0];g+=`<div style="left:${sx[1]}px;top:0;width:calc(2px*var(--inv,1));height:1350px"></div>`}
+ if(sx){nx+=sx[0];g+=`<div style="left:${sx[1]}px;top:0;width:calc(2px*var(--inv,1));height:${EX.h}px"></div>`}
  if(sy){ny+=sy[0];g+=`<div style="top:${sy[1]}px;left:0;height:calc(2px*var(--inv,1));width:1080px"></div>`}
  $('guides').innerHTML=g;return[Math.round(nx),Math.round(ny)]}
 addEventListener('pointermove',e=>{if(!drag)return;const el=get(sel),o=drag.o,dx=(e.clientX-drag.sx)/scale,dy=(e.clientY-drag.sy)/scale,h=drag.h;
- if(!h){[el.x,el.y]=e.altKey?[Math.round(o.x+dx),Math.round(o.y+dy)]:snapTo(el,o.x+dx,o.y+dy)}else{let{x,y,w,h:ht}=o;
-  if(h.includes('e'))w=o.w+dx;if(h.includes('s'))ht=o.h+dy;if(h.includes('w')){w=o.w-dx;x=o.x+dx}if(h.includes('n')){ht=o.h-dy;y=o.y+dy}
-  if(w<20){if(h.includes('w'))x-=20-w;w=20}if(ht<20){if(h.includes('n'))y-=20-ht;ht=20}
-  Object.assign(el,{x:Math.round(x),y:Math.round(y),w:Math.round(w),h:Math.round(ht)})}
+ if(h==='rot'){const r=$('sel').getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;let a=Math.atan2(e.clientY-cy,e.clientX-cx)*180/Math.PI+90;if(e.shiftKey)a=Math.round(a/15)*15;a=Math.round(a);if(a>180)a-=360;el.rot=a;refreshNow(el);return}
+ if(!h){[el.x,el.y]=e.altKey?[Math.round(o.x+dx),Math.round(o.y+dy)]:snapTo(el,o.x+dx,o.y+dy)}else{
+  const t=(o.rot||0)*Math.PI/180,c=Math.cos(t),s=Math.sin(t),lx=dx*c+dy*s,ly=-dx*s+dy*c;let w=o.w,ht=o.h;
+  if(h.includes('e'))w=o.w+lx;if(h.includes('w'))w=o.w-lx;if(h.includes('s'))ht=o.h+ly;if(h.includes('n'))ht=o.h-ly;
+  w=Math.max(20,w);ht=Math.max(20,ht);
+  const cxl=h.includes('e')?(w-o.w)/2:h.includes('w')?-(w-o.w)/2:0,cyl=h.includes('s')?(ht-o.h)/2:h.includes('n')?-(ht-o.h)/2:0,
+   ncx=o.x+o.w/2+cxl*c-cyl*s,ncy=o.y+o.h/2+cxl*s+cyl*c;
+  Object.assign(el,{x:Math.round(ncx-w/2),y:Math.round(ncy-ht/2),w:Math.round(w),h:Math.round(ht)})}
  refreshNow(el)});
 addEventListener('pointerup',()=>{if(drag){drag=null;$('guides').innerHTML='';commit()}});
 $('cv').addEventListener('dblclick',e=>{const n=e.target.closest('.el');if(!n)return;const el=get(+n.dataset.id);if(el.t!=='text')return;const i=n.firstChild;
@@ -250,24 +254,24 @@ $('aA').onclick=()=>{const T=TH[P[cur].th??cur],e=E({t:'art',u:1,x:400,y:500,w:2
 $('fA').onchange=e=>{const f=e.target.files[0];if(!f)return;readImg(f,(id,w,h)=>{const W=Math.min(600,w),el=E({t:'img',src:id,x:240,y:300,w:W,h:W*h/w});P[cur].els.push(el);sel=el.id;render();commit()});e.target.value=''};
 $('fR').onchange=e=>{const f=e.target.files[0],el=sel&&get(sel);if(!f||!el)return;readImg(f,id=>{el.src=id;refresh(el);commit()});e.target.value=''};
 $('un').onclick=()=>hist(-1);$('re').onclick=()=>hist(1);
-function fitV(){const a=$('area');scale=Math.max(.1,Math.min((a.clientWidth-28)/1080,(a.clientHeight-28)/1350)*(zm||1));const w=$('wrap');w.style.width=1080*scale+'px';w.style.height=1350*scale+'px';$('stage').style.transform=`scale(${scale})`;$('stage').style.setProperty('--inv',1/scale)}
+function fitV(){const a=$('area');scale=Math.max(.1,Math.min((a.clientWidth-28)/1080,(a.clientHeight-28)/EX.h)*(zm||1));const w=$('wrap');w.style.width=1080*scale+'px';w.style.height=EX.h*scale+'px';document.documentElement.style.setProperty('--ph',EX.h+'px');document.documentElement.style.setProperty('--phn',EX.h);$('stage').style.transform=`scale(${scale})`;$('stage').style.setProperty('--inv',1/scale)}
 new ResizeObserver(fitV).observe($('area'));
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function snap(pi=cur){sel=null;updSel();const pg=P[pi],fs=[...new Set(pg.els.map(e=>e.ff).filter(Boolean))];
  try{await Promise.all(fs.flatMap(f=>[400,800].map(w=>document.fonts.load(`${w} 24px "${f}"`))))}catch(e){}await document.fonts.ready;
  $('cv').innerHTML='';
- const w=document.createElement('div');w.style.cssText='position:fixed;left:-20000px;top:0;width:1080px;height:1350px';
- const c=document.createElement('div');c.style.cssText='position:relative;width:1080px;height:1350px;overflow:hidden;background:'+(pg.bg||'#fff');w.appendChild(c);document.body.appendChild(w);
+ const w=document.createElement('div');w.style.cssText='position:fixed;left:-20000px;top:0;width:1080px;height:'+EX.h+'px';
+ const c=document.createElement('div');c.style.cssText='position:relative;width:1080px;height:'+EX.h+'px;overflow:hidden;background:'+(pg.bg||'#fff');w.appendChild(c);document.body.appendChild(w);
  pg.els.forEach(el=>{const n=document.createElement('div');n.className='el';c.appendChild(n);paintEl(n,el)});
  await sleep(150);
- try{return await html2canvas(c,{scale:EX.scale||1,width:1080,height:1350,backgroundColor:pg.bg||'#ffffff',useCORS:true,onclone:(d,n)=>{n.parentNode.style.left='0'}})}finally{w.remove()}}
+ try{return await html2canvas(c,{scale:EX.scale||1,width:1080,height:EX.h,backgroundColor:pg.bg||'#ffffff',useCORS:true,onclone:(d,n)=>{n.parentNode.style.left='0'}})}finally{w.remove()}}
 const nm=i=>`${String(i+1).padStart(2,'0')}-${R[i][3]}.${EX.fmt==='jpeg'?'jpg':'png'}`,toB=cv=>new Promise(r=>cv.toBlob(r,EX.fmt==='jpeg'?'image/jpeg':'image/png',.92));
 const dl=(b,fn)=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
 const busy=v=>['b1','b2','b3'].forEach(i=>$(i).disabled=v);
 async function all(fn){const k=cur;for(let i=0;i<P.length;i++){cur=i;$('st').textContent=`Rendering ${i+1}/${P.length}…`;await fn(i,await snap(i))}cur=k;render()}
 $('b1').onclick=async()=>{busy(1);try{dl(await toB(await snap(cur)),nm(cur));render();$('st').textContent='PNG downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
 $('b2').onclick=async()=>{busy(1);try{const z=new JSZip();await all(async(i,c)=>z.file(nm(i),await toB(c)));z.file('captions.txt',P.map((pg,i)=>`── ${R[i][0]} ──\n${tok(pg.cap??capDef(i))}`).join('\n\n'));dl(await z.generateAsync({type:'blob'}),'rashifal-12.zip');$('st').textContent='ZIP downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
-$('b3').onclick=async()=>{busy(1);try{const{jsPDF}=window.jspdf,p=new jsPDF({unit:'px',format:[1080,1350],orientation:'portrait',hotfixes:['px_scaling']});await all(async(i,c)=>{if(i)p.addPage([1080,1350],'portrait');p.addImage(c.toDataURL('image/jpeg',.95),'JPEG',0,0,1080,1350)});p.save('rashifal-12.pdf');$('st').textContent='PDF downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
+$('b3').onclick=async()=>{busy(1);try{const{jsPDF}=window.jspdf,p=new jsPDF({unit:'px',format:[1080,EX.h],orientation:'portrait',hotfixes:['px_scaling']});await all(async(i,c)=>{if(i)p.addPage([1080,EX.h],'portrait');p.addImage(c.toDataURL('image/jpeg',.95),'JPEG',0,0,1080,EX.h)});p.save('rashifal-12.pdf');$('st').textContent='PDF downloaded.'}catch(e){$('st').textContent='Error: '+e.message}busy(0)};
 function modal(h){const m=document.createElement('div');m.id='md';m.innerHTML=`<div class="bx">${h}</div>`;m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);return m}
 $('bOv').onclick=()=>{const m=modal('<h3 style="margin:0 0 12px">All 12 pages — click one to edit</h3><div class="ovg"></div>'),g=m.querySelector('.ovg');
  P.forEach((pg,i)=>{const d=document.createElement('div');d.className='th';d.innerHTML='<div class="c2"></div><span class="lb"></span>';const c=d.firstChild;c.style.background=pg.bg;g.appendChild(d);d.querySelector('.lb').textContent=`${i+1}. ${R[i][0]}`;
@@ -295,5 +299,8 @@ render();fitV();commit();document.fonts.ready.then(()=>render());
 <script src="elements-addon.js"></script>
 <script src="ui-addon.js"></script>
 <script src="studio-addon.js"></script>
+<script src="graphics-pack.js"></script>
+<script src="tpl-pack.js"></script>
+<script src="canva-addon.js"></script>
 </body>
 </html>

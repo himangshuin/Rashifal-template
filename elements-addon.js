@@ -102,4 +102,5 @@ function fill(){const g=D.querySelector('.dg');g.innerHTML='';
   d.onclick=()=>{pushRec(l[1]);const e=gE(l[1],400,520,260);e.x=Math.round((1080-e.w)/2);e.y=Math.round((1350-e.h)/2);P[cur].els.push(e);sel=e.id;render();commit()};g.appendChild(d)})}
 const nav=document.querySelector('.tools');
 [['aTp','▦','Templates','tp'],['aEl','❖','Elements','el']].reverse().forEach(([id,ic,t,m])=>{const b=document.createElement('button');b.id=id;b.innerHTML=`<i>${ic}</i>${t}`;b.onclick=()=>{if(D.style.display==='flex'&&mode===m){D.style.display='none';return}mode=m;shell()};nav.prepend(b)});
+window.EA={L,LIB,TP,BG,gE,svg,th,build};
 })();
