@@ -121,6 +121,7 @@ const reopen=()=>{if(openId){const i=openId;openId=null;openP(i)}};
 /* ---------------- TEMPLATES ---------------- */
 const OLDC={'Quote':'Quote','Tips list':'Guide','Review':'Review','Panchang':'Astro','Lucky card':'Horoscope','Offer / CTA':'Promo','Photo caption':'Quote','Festival':'Festival','Kundali':'Astro','Q & A':'Engage'};
 const ALLT=EA.TP.map(([n,f])=>({n,cat:OLDC[n]||'Other',f})).concat(TPX.map(([n,c,f])=>({n,cat:c,f})));
+ALLT.sort((a,b)=>(b.cat==='CTA')-(a.cat==='CTA'));
 function buildT(f,T){const X=[],rect=o=>X.push(E({t:'rect',...o})),txt=o=>X.push(E({t:'text',ff:FONTS[0],fs:24,color:'#222222',al:'l',lh:1.5,txt:'',...o})),gx=(g,x,y,w,c,c2)=>X.push(mkG(g,x,y,w,c,c2,T));f(T,rect,txt,gx,X);return adaptEls(X,1350,PH())}
 let tcat='All',tq='',tti=null;
 function rTpl(b){const tc=['All',...new Set(ALLT.map(t=>t.cat))];

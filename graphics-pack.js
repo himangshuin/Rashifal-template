@@ -159,5 +159,21 @@ add(LD,'Spiral','#7c3aed',0,ST('M50 50m0 0a4 4 0 1 1 8 0a10 10 0 1 1-20 0a18 18 
 add('Social','Verified badge','#1d9bf0','#ffffff',`${Array.from({length:12},(_,i)=>`<circle cx="50" cy="16" r="14" fill="{A}" transform="rotate(${i*30} 50 50)"/>`).join('')}<circle cx="50" cy="50" r="34" fill="{A}"/>${ST('M32 51l13 13 24-28',9,'{B}')}`);
 add('Social','Insta action bar','#111827',0,`<path d="M30 40C12 28 10 14 20 10c5-2 8 1 10 5 2-4 5-7 10-5 10 4 8 18-10 30z" fill="none" stroke="{A}" stroke-width="4" stroke-linejoin="round" transform="translate(0 0)"/><path d="M72 8h28a12 12 0 0 1 12 12v8a12 12 0 0 1-12 12H88l-14 10V40a12 12 0 0 1-8-12v-8A12 12 0 0 1 72 8z" fill="none" stroke="{A}" stroke-width="4" stroke-linejoin="round" transform="translate(4 0)"/><path d="M136 28L176 8 164 46 152 36zM152 36l24-28" fill="none" stroke="{A}" stroke-width="4" stroke-linejoin="round" transform="translate(4 0)"/><path d="M232 8h22v38l-11-9-11 9z" fill="none" stroke="{A}" stroke-width="4" stroke-linejoin="round" transform="translate(4 0)"/>`,{vb:'0 0 270 54'});
 
+
+/* ================= CTA ICONS ================= */
+const IC='Icons';
+add(IC,'Heart icon','#ffd23f',0,ST('M50 86C14 60 10 34 28 24c10-5 18 0 22 8 4-8 12-13 22-8 18 10 14 36-22 62z',7));
+add(IC,'Comment icon','#ffd23f',0,ST('M50 14C26 14 10 30 10 50c0 10 4 19 12 25l-4 14 16-8c5 2 10 3 16 3 24 0 40-16 40-34S74 14 50 14z',7));
+add(IC,'Send icon','#ffd23f',0,ST('M90 12L10 44l30 14 14 30zM40 58L90 12',7));
+add(IC,'Save icon','#ffd23f',0,ST('M24 12h52v78L50 68 24 90z',7));
+add(IC,'WhatsApp icon','#25d366','#ffffff','<circle cx="50" cy="50" r="46" fill="{A}"/><path d="M27 75l4-13A25 25 0 1 1 41 71z" fill="none" stroke="{B}" stroke-width="5" stroke-linejoin="round"/><path d="M40 37c-3 3-3 8 2 14 5 7 11 10 16 9 3-1 5-4 4-6l-6-3-3 3c-3-1-7-5-9-9l3-3-3-6c-1-1-3 0-4 1z" fill="{B}"/>');
+add(IC,'Calendar icon','#111111',0,ST('M16 24h68v62H16zM16 42h68M34 14v18M66 14v18',6)+'<circle cx="34" cy="58" r="4" fill="{A}"/><circle cx="50" cy="58" r="4" fill="{A}"/><circle cx="66" cy="58" r="4" fill="{A}"/><circle cx="34" cy="73" r="4" fill="{A}"/><circle cx="50" cy="73" r="4" fill="{A}"/>');
+add(IC,'Cards icon','#111111',0,'<rect x="14" y="26" width="42" height="62" rx="7" fill="none" stroke="{A}" stroke-width="6" transform="rotate(-14 35 57)"/><rect x="44" y="14" width="42" height="62" rx="7" fill="#fff" stroke="{A}" stroke-width="6" transform="rotate(10 65 45)"/><path d="M65 30Q66 40 76 42Q66 44 65 54Q64 44 54 42Q64 40 65 30z" fill="{A}" transform="rotate(10 65 45)"/>');
+add(IC,'Lotus icon','#111111',0,ST('M50 14C36 32 36 58 50 76C64 58 64 32 50 14zM50 76C30 74 16 60 14 44C32 46 44 58 50 76zM50 76c20-2 34-16 36-32-18 2-30 14-36 32zM22 86h56',6));
+const tornP=(()=>{let d='M0 40V16',x=0,i=0;while(x<400){x+=7+((i*5)%6);i++;d+=`L${Math.min(x,400)} ${6+((i*37)%17)}`}return d+'V40z'})();
+add('Lines & Doodles','Torn paper edge','#111111',0,`<path d="${tornP}" fill="{A}"/>`,{vb:'0 0 400 40',pa:'none'});
+add('Lines & Doodles','Dashed arrow','#111111',0,ST('M6 8C42 6 74 20 90 50',4,'{A}','stroke-dasharray="3 8"')+'<path d="M78 48L91 54L94 39" fill="none" stroke="{A}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',{vb:'0 0 100 62'});
+add('Lines & Doodles','Alert ticks','#111111',0,ST('M8 62l16-8M28 34l14-12M58 16l5-16',6),{});
+
 window.GFX3=L;
 })();
