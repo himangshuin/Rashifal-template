@@ -103,6 +103,19 @@ ss.innerHTML=Object.entries(SETS).map(([k,v])=>`<option value="${k}">${v}</optio
 $('bOv').before(ss);$('b2').textContent='⬇ ZIP';$('b3').textContent='⬇ PDF';
 ss.onchange=()=>{persist();SET=ss.value;try{localStorage.setItem('rashi_set',SET)}catch(e){}loadSet()};
 
+/* ---------- project import / export helpers ---------- */
+window.getSet=()=>SET;
+window.importProject=d=>{
+ if(!d||!Array.isArray(d.P)||!d.P.length||!d.P.every(p=>p&&Array.isArray(p.els)))throw new Error('This file has no slides (expected a project exported from Rashifal Studio).');
+ let s=d.SET&&SETS[d.SET]?d.SET:null;
+ if(!s){const t=d.P.map(p=>p.cap||'').join(' ');s=/নক্ষত্ৰ গোচৰ/.test(t)?'nakshatra':/গ্ৰহ গোচৰ/.test(t)?'transit':/মাহেকীয়া/.test(t)?'monthly':d.P.length===12?'weekly':SET}
+ try{persist()}catch(e){}
+ SET=s;ss.value=s;try{localStorage.setItem('rashi_set',SET)}catch(e){}
+ const base=LB(s);R.length=0;R.push(...d.P.map((_,i)=>(d.RL&&d.RL[i])||base[i]||['ছ্লাইড '+(i+1),'Slide '+(i+1),'＋','slide']));
+ P=d.P;Object.keys(IMG).forEach(k=>delete IMG[k]);Object.assign(IMG,d.IMG||{});Object.assign(V,d.V||{});EX.fmt=(d.EX&&d.EX.fmt)||'png';EX.scale=(d.EX&&d.EX.scale)||1;EX.h=(d.EX&&d.EX.h)||1350;
+ uid=Math.max(1,...P.flatMap(p=>p.els.map(e=>e.id||0)))+1;iid=Math.max(0,...Object.keys(IMG).map(k=>+k.slice(1)||0));
+ CAN=R.length;cur=0;sel=null;H=[];hi=-1;fitV();render();commit();persist();return{set:s,pages:P.length}};
+
 /* ---------- add / duplicate / delete slides ---------- */
 function renum(){CAN=P.length;P.forEach((pg,i)=>{const nm=pg.els.find(e=>e.key==='num');if(nm)nm.txt=String(i).padStart(2,'0');
  const dt=pg.els.filter(e=>/^dt\d+$/.test(e.key));if(dt.length){const y0=dt[0].y;pg.els=pg.els.filter(e=>!dt.includes(e));const c=TH[pg.th??8].p;for(let k=0;k<P.length;k++)pg.els.push(E({t:'rect',key:'dt'+k,x:70+k*38,y:y0,w:26,h:8,r:4,bg:k===i?c:mix(c,'#ffffff',.65)}))}})}

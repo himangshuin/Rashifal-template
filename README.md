@@ -22,3 +22,6 @@ Older documentation follows.
 ---
 
 # Rashifal-template
+---
+## Backup / import fix
+Project ▸ Export now stores which set the project belongs to (weekly, monthly, transit, nakshatra, carousel) and the slide labels. Project ▸ Import accepts any number of slides (older exports are recognised automatically), switches to the right set, and shows a clear message if a file can't be read. Note: a browser only keeps its own work — to see a design in another browser, export in the first and import in the second.

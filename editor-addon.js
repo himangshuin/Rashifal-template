@@ -55,7 +55,7 @@ const css=document.createElement('style');css.textContent=`
  #pnl{position:fixed;left:0;right:0;bottom:0;height:62vh;z-index:30;border-radius:18px 18px 0 0;box-shadow:0 -10px 34px rgba(0,0,0,.35);border:0}#pnl .hdl{display:none}.gc.wide{grid-column:span 3}}`;
 document.head.appendChild(css);
 const toastEl=document.createElement('div');toastEl.id='toast';document.body.appendChild(toastEl);let tt0;
-const toast=m=>{toastEl.textContent=m;toastEl.classList.add('o');clearTimeout(tt0);tt0=setTimeout(()=>toastEl.classList.remove('o'),2200)};
+const toast=m=>{toastEl.textContent=m;toastEl.classList.add('o');clearTimeout(tt0);tt0=setTimeout(()=>toastEl.classList.remove('o'),2200)};window.toast=toast;
 
 /* ---------------- page-size adaption ---------------- */
 function adaptEls(els,from,to){if(from===to)return els;const d=to-from,s=to/from;
